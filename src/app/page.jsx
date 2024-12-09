@@ -1,10 +1,9 @@
-import Image from "next/image";
-
+import SearchBox from "@/components/SearchBox";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Herro? Herro?</h1>
+    <div className="flex items-center justify-center">
+      <SearchBox />
     </div>
-  );
+    );
 }
