@@ -7,7 +7,7 @@ export default function Home() {
       <div>
         <NavBar />
       </div>
-      <div className="flex items-center justify-center h-full">
+      <div className="flex items-center justify-center h-full opacity-75">
         <SearchBox />
       </div>
     </div>
