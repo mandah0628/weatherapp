@@ -8,7 +8,7 @@ export default function Home() {
         <NavBar />
       </div>
       <div className="flex items-center justify-center h-full opacity-75">
-        <SearchBox />
+          <SearchBox />
       </div>
     </div>
     );
