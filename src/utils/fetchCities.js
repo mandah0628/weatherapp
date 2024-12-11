@@ -1,6 +1,6 @@
 const GEO_URL = "https://api.openweathermap.org/geo/1.0/direct";
 
-export async function fetchCities(query, limit = 5) {
+export async function fetchCities(query, limit = 10) {
   if (!query) return []; // If the query is empty, return an empty array.
 
   const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;

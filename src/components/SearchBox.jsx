@@ -4,21 +4,27 @@ import { useState } from "react";
 import { fetchCities } from "@/utils/fetchCities";
 import Dropdown from "@/components/Dropdown";
 
-export default function SearchBox({ onCitySelect }) {
+export default function SearchBox({ onCitySelect }) 
+{
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
-  const handleInputChange = async (e) => {
-    const userInput = e.target.value;
-    setQuery(userInput);
+  const handleInputChange = async(e) => 
+    {
+      const userInput = e.target.value;
+      setQuery(userInput);
 
-    if (userInput) {
-      const cities = await fetchCities(userInput);
-      setSuggestions(cities);
-    } else {
-      setSuggestions([]);
-    }
-  };
+      if (userInput) 
+        {
+          const cities = await fetchCities(userInput);
+          setSuggestions(cities);
+        } 
+        
+        else 
+        {
+        setSuggestions([]);
+        }
+    };
 
   return (
     <div className="relative">
@@ -32,11 +38,12 @@ export default function SearchBox({ onCitySelect }) {
       {suggestions.length > 0 && (
         <Dropdown
           items={suggestions}
-          onSelect={(city) => {
-            onCitySelect(city);
-            setQuery(city.name);
-            setSuggestions([]);
-          }}
+          onSelect={(city) => 
+            {
+              onCitySelect(city);
+              setQuery(city.name);
+              setSuggestions([]);
+            }}
         />
       )}
     </div>
