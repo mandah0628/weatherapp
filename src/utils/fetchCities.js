@@ -7,9 +7,7 @@ export async function fetchCities(query, limit = 10) {
 
   try 
   {
-    const response = await fetch(
-      `${GEO_URL}?q=${encodeURIComponent(query)}&limit=${limit}&appid=${apiKey}`
-    );
+    const response = await fetch(`${GEO_URL}?q=${encodeURIComponent(query)}&limit=${limit}&appid=${apiKey}`);
 
     if (!response.ok) 
         {
