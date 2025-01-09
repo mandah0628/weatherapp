@@ -2,26 +2,25 @@
 
 import { useState } from "react";
 import { fetchCities } from "@/utils/fetchCities";
+import { useRouter } from "next/navigation";
+
 import Dropdown from "@/components/Dropdown";
 
 export default function SearchBox({ onCitySelect }) 
 {
+  const router  = useRouter();
+  console.log(router);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
-  const handleInputChange = async(e) => 
-    {
+  const handleInputChange = async(e) => {
       const userInput = e.target.value;
       setQuery(userInput);
 
-      if (userInput) 
-        {
+      if(userInput) {
           const cities = await fetchCities(userInput);
           setSuggestions(cities);
-        } 
-        
-        else 
-        {
+        } else {
         setSuggestions([]);
         }
     };
@@ -40,7 +39,9 @@ export default function SearchBox({ onCitySelect })
           items={suggestions}
           onSelect={(city) => 
             {
-              onCitySelect(city);
+              //onCitySelect(city);
+              console.log(city,"psda");
+              router.push(`/psda?lat=${city.lat}&lon=${city.lon}`)
               setQuery(city.name);
               setSuggestions([]);
             }}
@@ -48,4 +49,5 @@ export default function SearchBox({ onCitySelect })
       )}
     </div>
   );
+  
 }

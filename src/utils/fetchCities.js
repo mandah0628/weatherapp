@@ -10,7 +10,7 @@ export async function fetchCities(query, limit = 10) {
     const response = await fetch(`${GEO_URL}?q=${encodeURIComponent(query)}&limit=${limit}&appid=${apiKey}`);
 
     if (!response.ok) 
-        {
+    {
       throw new Error("Failed to fetch cities");
     }
 
