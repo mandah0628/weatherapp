@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import Dropdown from "@/components/Dropdown";
 
-export default function SearchBox({ onCitySelect }) 
+export default function SearchBox() 
 {
   const router  = useRouter();
   console.log(router);
@@ -39,7 +39,6 @@ export default function SearchBox({ onCitySelect })
           items={suggestions}
           onSelect={(city) => 
             {
-              //onCitySelect(city);
               router.push(`/city?lat=${city.lat}&lon=${city.lon}`)
               setQuery(city.name);
               setSuggestions([]);

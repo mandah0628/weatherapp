@@ -2,7 +2,7 @@ export default function WeatherInfo({weatherData})
 {
 
   if(!weatherData){
-    return <p>Loading weather data...</p>
+    return <p className="flex items-center justify-center h-full">Loading weather data...</p>
   }
   return(
     <div className="flex items-center justify-center h-full">
