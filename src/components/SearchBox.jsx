@@ -40,8 +40,7 @@ export default function SearchBox({ onCitySelect })
           onSelect={(city) => 
             {
               //onCitySelect(city);
-              console.log(city,"psda");
-              router.push(`/psda?lat=${city.lat}&lon=${city.lon}`)
+              router.push(`/city?lat=${city.lat}&lon=${city.lon}`)
               setQuery(city.name);
               setSuggestions([]);
             }}
