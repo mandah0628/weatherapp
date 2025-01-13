@@ -16,9 +16,7 @@ export async function fetchCities(query, limit = 10) {
   {
     const endpoint =`/direct?q=${encodeURIComponent(query)}&limit=${limit}&appid=${apiKey}`;
     const response = await apiClient.get(endpoint);
-    console.log(response.data);
-
-    console.log(response.data);
+   
     return response.data; // Axios automatically parses JSON.
 
   } catch (error) {

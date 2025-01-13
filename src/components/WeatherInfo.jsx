@@ -5,7 +5,7 @@ export default function WeatherInfo({weatherData})
     return <p className="flex items-center justify-center h-full">Loading weather data...</p>
   }
   return(
-    <div className="flex items-center justify-center h-full">
+    <div>
       <p>Temperature: {weatherData.current.temp}°C</p>
       <p>Feels like: {weatherData.current.feels_like}°C</p>
       <p>Humidity: {weatherData.current.humidity}%</p>

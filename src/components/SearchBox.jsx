@@ -9,11 +9,10 @@ import Dropdown from "@/components/Dropdown";
 export default function SearchBox() 
 {
   const router  = useRouter();
-  console.log(router);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
-  const handleInputChange = async(e) => {
+  const cityQueryChange = async(e) => {
       const userInput = e.target.value;
       setQuery(userInput);
 
@@ -30,7 +29,7 @@ export default function SearchBox()
       <input
         type="text"
         value={query}
-        onChange={handleInputChange}
+        onChange={cityQueryChange}
         placeholder="Search for a city"
         className="border p-2 rounded-lg w-full"
       />
