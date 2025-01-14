@@ -38,7 +38,7 @@ export default function SearchBox()
           items={suggestions}
           onSelect={(city) => 
             {
-              router.push(`/city?lat=${city.lat}&lon=${city.lon}`)
+              router.push(`/city?lat=${city.lat}&lon=${city.lon}&city=${encodeURIComponent(city.name)}`)
               setQuery(city.name);
               setSuggestions([]);
             }}

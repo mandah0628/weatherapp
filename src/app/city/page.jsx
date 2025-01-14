@@ -5,11 +5,13 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchWeather } from "@/utils/fetchWeather";
 
+
 export default function Home()
 {
     const searchParams = useSearchParams();
     let lat = searchParams.get("lat");
     let lon = searchParams.get("lon");
+    let cityName = searchParams.get("city");
 
     const [weatherData, setWeatherData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -34,7 +36,7 @@ export default function Home()
 
     return(
         <div className="h-screen bg-cover bg-center">
-            <WeatherInfo weatherData={weatherData}/>
+            <WeatherInfo weatherData={weatherData} cityName={cityName}/>
         </div>
     );
 }
