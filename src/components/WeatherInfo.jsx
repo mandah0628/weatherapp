@@ -22,7 +22,7 @@ export default function WeatherInfo({weatherData,cityName})
   
   return(
     <div className="flex">
-      <div className="">
+      <div className="bg-red-400 w-400">
         <h1>{cityName}</h1>
         <p>Time: {displayTime(weatherData.current.dt)}</p>
         <p>Temperature: {weatherData.current.temp}°C, Feels like: {weatherData.current.feels_like}°C</p>
