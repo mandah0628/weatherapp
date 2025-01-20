@@ -14,7 +14,7 @@ export default function WeatherInfo({weatherData,cityName})
     height:"400px",
   };
 
-
+  console.log(weatherData);
   const center = {
     lat,
     lng: lon,
@@ -22,6 +22,7 @@ export default function WeatherInfo({weatherData,cityName})
   
   return(
     <div className="flex">
+      {/*Current weather*/}
       <div className="bg-red-400 w-400">
         <h1>{cityName}</h1>
         <p>Time: {displayTime(weatherData.current.dt)}</p>
@@ -33,7 +34,8 @@ export default function WeatherInfo({weatherData,cityName})
         <p>Chance of Precipitation: {Math.round(weatherData.hourly[0].pop * 100)}%</p>
       </div>
 
-      <div className="w-full h-full rounded-sm">
+      {/*Google Map Div*/}
+      <div className="w-full h-full">
         <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}>
           <GoogleMap
             mapContainerStyle={containerStyle}
@@ -43,6 +45,24 @@ export default function WeatherInfo({weatherData,cityName})
             <Marker position={center}/>
           </GoogleMap>
         </LoadScript>
+      </div>
+
+      {/*Weekly weather*/}
+      <div className="w-full h-full">
+        <p>Today:{Math.round(weatherData.daily[0].temp.max)}/{Math.round(weatherData.daily[0].temp.min)}</p>
+        <p></p>
+      </div>
+
+
+      {/*Hourly weather*/}
+      <div className="">
+
+      </div>
+
+
+      {/*Sunset,sunrise and other*/}
+      <div className="">
+
       </div>
     </div>
   );
