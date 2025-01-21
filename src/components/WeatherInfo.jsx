@@ -1,4 +1,5 @@
-import { displayTime } from "@/utils/displayTime";
+import displayTime  from "@/utils/displayTime";
+import calculateCurrentWeek from "@/utils/calculateCurrentWeek";
 import { GoogleMap,LoadScript, Marker } from "@react-google-maps/api";
 
 export default function WeatherInfo({weatherData,cityName})
@@ -7,19 +8,25 @@ export default function WeatherInfo({weatherData,cityName})
     return <p className="flex items-center justify-center h-full">Loading weather data...</p>
   }
   
-  const { lat, lon } = weatherData;
+  {/*Google map setup*/}
+  const {lat, lon} = weatherData;
 
   const containerStyle ={
     width:"600px",
     height:"400px",
   };
 
-  console.log(weatherData);
   const center = {
     lat,
     lng: lon,
   };
   
+  const currentWeek = calculateCurrentWeek(weatherData);
+  const currentDay = currentWeek[0];
+  console.log(weatherData);
+  console.log(currentWeek);
+  console.log(currentDay);
+
   return(
     <div className="flex">
       {/*Current weather*/}
@@ -35,7 +42,7 @@ export default function WeatherInfo({weatherData,cityName})
       </div>
 
       {/*Google Map Div*/}
-      <div className="w-full h-full">
+      <div className="">
         <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}>
           <GoogleMap
             mapContainerStyle={containerStyle}
@@ -48,14 +55,24 @@ export default function WeatherInfo({weatherData,cityName})
       </div>
 
       {/*Weekly weather*/}
-      <div className="w-full h-full">
-        <p>Today:{Math.round(weatherData.daily[0].temp.max)}/{Math.round(weatherData.daily[0].temp.min)}</p>
-        <p></p>
+      <div className="flex flex-col justify-center content-center">
+        <h1>Weekly forecast</h1>
+        <ul>
+          {currentWeek.map((day,index) => (
+            <li
+              key={index}
+              className=""
+            >
+              {day === currentDay? "Today" : day} : {Math.round(weatherData.daily[index].temp.max)}/{Math.round(weatherData.daily[index].temp.min)}
+            </li>
+
+          ))}
+        </ul>
       </div>
 
 
       {/*Hourly weather*/}
-      <div className="">
+      <div className=" ">
 
       </div>
 
