@@ -1,6 +1,7 @@
 import displayTime  from "@/utils/displayTime";
 import calculateCurrentWeek from "@/utils/calculateCurrentWeek";
 import uvIndex from "@/utils/uvIndex";
+import visibility from "@/utils/visibility";
 import { GoogleMap,LoadScript, Marker } from "@react-google-maps/api";
 
 export default function WeatherInfo({weatherData,cityName})
@@ -47,7 +48,6 @@ export default function WeatherInfo({weatherData,cityName})
 
       {/*Google Map Div*/}
       <div className="">
-        <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}>
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
@@ -55,22 +55,17 @@ export default function WeatherInfo({weatherData,cityName})
           >
             <Marker position={center}/>
           </GoogleMap>
-        </LoadScript>
       </div>
 
       {/*Weekly weather*/}
       <div className="flex flex-col justify-center content-center bg-green-500">
         <h1>Weekly forecast</h1>
         <ul>
-          {currentWeek.map((day,index) => (
-            <li
-              key={index}
-              className=""
-            >
-              {day === currentDay ? "Today" : day} : {Math.round(weatherData.daily[index].temp.max)}°/{Math.round(weatherData.daily[index].temp.min)}°
-            </li>
-
-          ))}
+        {currentWeek.slice(0, weatherData.daily.length).map((day, index) => (
+          <li key={index}>
+            {day === currentDay ? "Today" : day}: {Math.round(weatherData.daily[index].temp.max)}°/{Math.round(weatherData.daily[index].temp.min)}°
+          </li>
+        ))}
         </ul>
       </div>
 
@@ -79,12 +74,9 @@ export default function WeatherInfo({weatherData,cityName})
       <div className=" bg-purple-500">
           <h1>Hourly forecast</h1>
           <ul>
-            {hourly.map((hourlyData,index) => (
-            <li
-              key = {index}
-              className=""
-            >
-              {index <= 24 ? `${displayTime(hourlyData.dt)}: ${Math.round(hourlyData.temp)}°` : ""}
+          {hourly.slice(0, 24).map((hourlyData, index) => (
+            <li key={index}>
+              {`${displayTime(hourlyData.dt)}: ${Math.round(hourlyData.temp)}°`}
             </li>
             ))}
           </ul>
@@ -95,13 +87,16 @@ export default function WeatherInfo({weatherData,cityName})
       <div className="">
         {/*Sunrise*/}
         <div>
-
+            <p>{displayTime(weatherData.current.sunrise)}</p>
+            <p>{displayTime(weatherData.current.sunset)}</p>
         </div>
 
         {/*Sunset*/}
         <div>
-          
+
         </div>
+
+        {/*Visibility*/}
           
       </div>
     </div>
