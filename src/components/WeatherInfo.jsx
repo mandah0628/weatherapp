@@ -1,5 +1,6 @@
 import displayTime  from "@/utils/displayTime";
 import calculateCurrentWeek from "@/utils/calculateCurrentWeek";
+
 import { GoogleMap,LoadScript, Marker } from "@react-google-maps/api";
 
 export default function WeatherInfo({weatherData,cityName})
@@ -20,13 +21,15 @@ export default function WeatherInfo({weatherData,cityName})
     lat,
     lng: lon,
   };
+
   
   const currentWeek = calculateCurrentWeek(weatherData);
   const currentDay = currentWeek[0];
-  console.log(weatherData);
-  console.log(currentWeek);
-  console.log(currentDay);
 
+  const {hourly} = weatherData;
+
+  console.log(weatherData);
+  
   return(
     <div className="flex">
       {/*Current weather*/}
@@ -63,7 +66,7 @@ export default function WeatherInfo({weatherData,cityName})
               key={index}
               className=""
             >
-              {day === currentDay? "Today" : day} : {Math.round(weatherData.daily[index].temp.max)}/{Math.round(weatherData.daily[index].temp.min)}
+              {day === currentDay ? "Today" : day} : {Math.round(weatherData.daily[index].temp.max)}/{Math.round(weatherData.daily[index].temp.min)}
             </li>
 
           ))}
@@ -74,6 +77,16 @@ export default function WeatherInfo({weatherData,cityName})
       {/*Hourly weather*/}
       <div className=" bg-purple-500">
           <h1>Hourly forecast</h1>
+          <ul>
+            {hourly.map((hourlyData,index) => (
+            <li
+              key = {index}
+              className=""
+            >
+              {index <= 24 ? `${displayTime(hourlyData.dt)}: ${Math.round(hourlyData.temp)}` : ""}
+            </li>
+            ))}
+          </ul>
       </div>
 
 
