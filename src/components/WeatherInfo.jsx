@@ -55,7 +55,7 @@ export default function WeatherInfo({weatherData,cityName})
       </div>
 
       {/*Weekly weather*/}
-      <div className="flex flex-col justify-center content-center">
+      <div className="flex flex-col justify-center content-center bg-green-500">
         <h1>Weekly forecast</h1>
         <ul>
           {currentWeek.map((day,index) => (
@@ -72,8 +72,8 @@ export default function WeatherInfo({weatherData,cityName})
 
 
       {/*Hourly weather*/}
-      <div className=" ">
-
+      <div className=" bg-purple-500">
+          <h1>Hourly forecast</h1>
       </div>
 
 
