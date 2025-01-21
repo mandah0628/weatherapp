@@ -30,7 +30,7 @@ export default function WeatherInfo({weatherData,cityName})
   //Hourly forecast setup
   const {hourly} = weatherData;
 
-  console.log(weatherData);
+  console.log(weatherData.current);
   
   return(
     <div className="flex">
@@ -87,17 +87,16 @@ export default function WeatherInfo({weatherData,cityName})
       <div className="">
         {/*Sunrise*/}
         <div>
-            <p>{displayTime(weatherData.current.sunrise)}</p>
-            <p>{displayTime(weatherData.current.sunset)}</p>
+            <p>Sunrise:{displayTime(weatherData.current.sunrise)}</p>
         </div>
 
         {/*Sunset*/}
         <div>
-
+          <p>Sunset:{displayTime(weatherData.current.sunset)}</p>
         </div>
 
         {/*Visibility*/}
-          
+          <p>Visibity: {visibility(weatherData)}</p>
       </div>
     </div>
   );
