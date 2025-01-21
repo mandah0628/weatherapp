@@ -93,10 +93,16 @@ export default function WeatherInfo({weatherData,cityName})
 
       {/*Sunset,sunrise and other*/}
       <div className="">
-        {/**/}
-            <div>
+        {/*Sunrise*/}
+        <div>
 
-            </div>
+        </div>
+
+        {/*Sunset*/}
+        <div>
+          
+        </div>
+          
       </div>
     </div>
   );
