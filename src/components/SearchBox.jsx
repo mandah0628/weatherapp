@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { fetchCities } from "@/utils/fetchCities";
+import fetchCities from "@/utils/fetchCities";
 import { useRouter } from "next/navigation";
-
 import Dropdown from "@/components/Dropdown";
 
 export default function SearchBox() 
@@ -19,9 +18,9 @@ export default function SearchBox()
       if(userInput) {
           const cities = await fetchCities(userInput);
           setSuggestions(cities);
-        } else {
+      } else {
         setSuggestions([]);
-        }
+      }
     };
 
   return (
