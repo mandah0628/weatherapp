@@ -6,7 +6,7 @@ const apiClient = axios.create({
 
 const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 
-export async function fetchCities(query, limit = 10) {
+export default async function fetchCities(query, limit = 10) {
   if (!query) return []; // If the query is empty, return an empty array.
 
   try {
