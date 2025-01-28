@@ -30,12 +30,12 @@ export default function WeatherInfo({weatherData,cityName})
   //Hourly forecast setup
   const {hourly} = weatherData;
 
-  console.log(weatherData.current);
+  console.log(weatherData);
   
   return(
     <div className="flex">
       {/*Current weather*/}
-      <div className="bg-red-400 w-400">
+      <div className="bg-red-400">
         <h1>{cityName}</h1>
         <p>Time: {displayTime(weatherData.current.dt)}</p>
         <p>Temperature: {Math.round(weatherData.current.temp)}°C, Feels like: {Math.round(weatherData.current.feels_like)}°C</p>
@@ -84,7 +84,7 @@ export default function WeatherInfo({weatherData,cityName})
 
 
       {/*Sunset,sunrise and other*/}
-      <div className="">
+      <div className="bg-orange-400">
         {/*Sunrise*/}
         <div>
             <p>Sunrise:{displayTime(weatherData.current.sunrise)}</p>
