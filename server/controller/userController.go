@@ -2,13 +2,30 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/mandah0628/weatherapp/server/utils"
+
 )
 
 func RegisterUser (c *gin.Context) {
-	c.JSON(201, gin.H{"message" : "account created"})
-}
+	var requestBody struct {
+		Name string `json:"name"`
+		Email string `json:"email"`
+		Password string `json:"password"`
+	}
 
-func LoginUser (c *gin.Context) {
-	c.JSON(200, gin.H{"message" : "user logged in"})
+	// extract the request body
+	if err := c.ShouldBindJSON(&requestBody); err != nil {
+		c.JSON(400, gin.H{"error" : "Bad request"})
+		return
+	}
+
+	// hash password
+	hashedPassword, err :=  utils.HashPassword(requestBody.Password)
+	if err != nil {
+		c.JSON(500, gin.H{"error" : "Internal server error"})
+		return
+	}
+
+	
+
 }
