@@ -9,6 +9,6 @@ import (
 func UserRoutes(router *gin.Engine) {
 	userGroup := router.Group("/users")
 	{
-		userGroup.POST("/register", controller.)
+		userGroup.POST("/register", middleware.ValidateRegisterFields, controller.RegisterUser)
 	}
 }
