@@ -19,8 +19,8 @@ func main() {
 	// load port from env
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
-		PORT = "8080"
-	}
+		log.Fatalln("Missing PORT env variable");
+	} 
 	
 	// app instance
 	router := gin.Default()
