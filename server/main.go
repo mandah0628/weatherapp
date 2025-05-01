@@ -38,7 +38,7 @@ func main() {
 	} else {
 		prodProxy := os.Getenv("LOAD_BALANCER_IP")
 		if prodProxy == "" {
-			log.Fatalln("Missing load balancer ip from env")
+			log.Fatalln("Missing load balancer IP from env")
 		}
 		if err := router.SetTrustedProxies([]string{prodProxy}); err != nil {
 			log.Fatalln("Error setting trusted proxies:", err)
