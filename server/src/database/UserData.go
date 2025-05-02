@@ -31,7 +31,7 @@ func UpdateUser(userUuid uuid.UUID, updateData map[string]interface{}) error {
 }
 
 
-func GetUserByID(userUuid uuid.UUID) (*model.User, error) {
+func FindUserByID(userUuid uuid.UUID) (*model.User, error) {
 	var user model.User
 	err := config.Postgres.Model(&user).Where("id = ?", userUuid).First(&user).Error
 
