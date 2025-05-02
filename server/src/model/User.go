@@ -7,13 +7,14 @@ import (
 )
 
 type User struct {
-	ID uuid.UUID `gorm:"type:uuid;primaryKey"`
-	Name string `gorm:"not null;size:50"`
-	Email string `gorm:"unique;not null;size:100"`
-	Password string `gorm:"not null;size:100"`
+	ID uuid.UUID 				`gorm:"type:uuid;primaryKey"`
+	Name string 				`gorm:"not null;size:50"`
+	Email string 				`gorm:"unique;not null;size:100"`
+	Password string 			`gorm:"not null;size:100"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
+	DeletedAt gorm.DeletedAt 	`gorm:"index"`
+	SavedCities []City 			`gorm:"foreignKey:UserID"`
 }
 
 func (user *User) BeforeCreate(tx *gorm.DB) (err error) {
