@@ -1,13 +1,16 @@
 package controller
 
 import (
+	"hash/maphash"
 	"log"
+
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+	"github.com/mandah0628/weatherapp/server/src/config"
 	"github.com/mandah0628/weatherapp/server/src/database"
 	"github.com/mandah0628/weatherapp/server/src/model"
 	"github.com/mandah0628/weatherapp/server/src/utils"
 )
-
 
 // registers user
 func RegisterUser(c *gin.Context) {
@@ -111,4 +114,40 @@ func LoginUser(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"token" : token,
 	})
+}
+
+
+func UpdateUser(c *gin.Context) {
+	// build a map with the new data
+	var newData map[string]interface{}
+	if err := c.ShouldBindJSON(&newData); err != nil {
+		c.JSON(400, gin.H{
+			"error" : "Invalid data",
+		})
+	}
+
+	// whitelist fields that can be changed
+	allowedFields := map[string]bool{
+		"name" : true,
+		"email" : true,
+	}
+
+	// remove non-whitelisted fields from the request body
+	for field := range newData {
+		if !allowedFields[field] {
+			delete(newData, field)
+		}
+	}
+
+	// parse user id string into uuid
+	uid, err := uuid.Parse()
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error" : "Invalid user id",
+		})
+	}
+
+
+	if err := database.UpdateUser()
+
 }
