@@ -38,7 +38,9 @@ func Connect() {
 
     if env == "dev" {
         log.Println("Database running in DEVELOPMENT mode, applying auto-migrations")
-        if err := db.AutoMigrate(&model.User{}); err != nil {
+        if err := db.AutoMigrate(
+            &model.User{},
+        ); err != nil {
             log.Fatalf("Failed to auto migrate: %v", err)
         }
     }
