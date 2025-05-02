@@ -81,7 +81,6 @@ func main() {
 		log.Fatalln("Missing PORT from env");
 	}
 	// start server
-	log.Println("Starting server on port:", PORT)
 	if err := router.Run(":" + PORT); err != nil {
 		log.Fatalln("Failed to start Gin server:", err)
 	}
