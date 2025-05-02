@@ -1,6 +1,7 @@
 package database
 
 import (
+	"github.com/google/uuid"
 	"github.com/mandah0628/weatherapp/server/src/config"
 	"github.com/mandah0628/weatherapp/server/src/model"
 )
@@ -17,4 +18,11 @@ func FindUserByEmail(email string) (*model.User, error) {
 	}
 
 	return &user, nil
+}
+
+func UpdateUser(userId uuid.UUID, updateData map[string]interface{}) error {
+	return config.Postgres.
+	Model(&model.User{}).
+	Where("id = ?").
+	Updates(updateData).Error
 }
