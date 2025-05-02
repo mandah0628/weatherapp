@@ -34,7 +34,7 @@ func main() {
 	// proxies
 	if env == "dev" {
 		router.SetTrustedProxies(nil)
-		log.Println("Running app in DEVELOPMENT mode, all proxies allowed")
+		log.Println("Starting app in DEVELOPMENT mode, all proxies allowed")
 	} else {
 		prodProxy := os.Getenv("LOAD_BALANCER_IP")
 		if prodProxy == "" {
@@ -43,7 +43,7 @@ func main() {
 		if err := router.SetTrustedProxies([]string{prodProxy}); err != nil {
 			log.Fatalln("Error setting trusted proxies:", err)
 		}
-		log.Println("Running app in PRODUCTION mode")
+		log.Println("Starting app in PRODUCTION mode")
 	}
 
 
