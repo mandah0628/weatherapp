@@ -23,6 +23,6 @@ func FindUserByEmail(email string) (*model.User, error) {
 func UpdateUser(userId uuid.UUID, updateData map[string]interface{}) error {
 	return config.Postgres.
 	Model(&model.User{}).
-	Where("id = ?").
+	Where("id = ?", userId).
 	Updates(updateData).Error
 }
