@@ -11,6 +11,7 @@ func UserRoutes(router *gin.Engine) {
 	{
 		userGroup.POST("/register", controller.RegisterUser)
 		userGroup.POST("/login", controller.LoginUser)
+		userGroup.POST("/logout", controller.LogoutUser)
 
 		userGroup.Use(middleware.ValidateToken())
 		userGroup.PUT("/update", controller.UpdateUser)
