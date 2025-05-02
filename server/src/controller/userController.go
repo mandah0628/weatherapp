@@ -3,6 +3,8 @@ package controller
 import (
 	"hash/maphash"
 	"log"
+	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -11,6 +13,8 @@ import (
 	"github.com/mandah0628/weatherapp/server/src/model"
 	"github.com/mandah0628/weatherapp/server/src/utils"
 )
+
+var isProd = os.Getenv("ENV") == "prod"
 
 // registers user
 func RegisterUser(c *gin.Context) {
@@ -63,10 +67,20 @@ func RegisterUser(c *gin.Context) {
 		return
 	}
 
-	log.Println("Returning toke, status 200", token)
-	c.JSON(200, gin.H{
-		"token" : token,
-	})
+	// set token in cookie
+	
+	cookie := http.Cookie{
+		Name:     "token",
+		Value:    token,
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   isProd,
+		SameSite: http.SameSiteLaxMode,
+		MaxAge:   3600,
+	}
+	http.SetCookie(c.Writer, &cookie)
+	// response
+	c.String(200, "ok")
 }
 
 
@@ -96,6 +110,7 @@ func LoginUser(c *gin.Context) {
 		return;
 	}
 
+	// verify if passwords match
 	if err := utils.VerifyPassword(user.Password, requestBody.Password); err != nil {
 		c.JSON(401, gin.H{
 			"error" : "Incorrect email or password",
@@ -103,6 +118,7 @@ func LoginUser(c *gin.Context) {
 		return
 	}
 	
+	// generate token
 	token, err := utils.GenerateToken(user.ID.String())
 	if err != nil {
 		c.JSON(500, gin.H{
@@ -111,9 +127,36 @@ func LoginUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"token" : token,
-	})
+	// set token in cookie
+	isProd := os.Getenv("ENV") == "prod"
+	cookie := http.Cookie{
+		Name:     "token",
+		Value:    token,
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   isProd,
+		SameSite: http.SameSiteLaxMode,
+		MaxAge:   3600,
+	}
+	http.SetCookie(c.Writer, &cookie)
+	// response
+	c.String(200, "ok")
+}
+
+
+func LogoutUser(c *gin.Context) {
+	cookie := http.Cookie{
+		Name:     "token",
+		Value:    "",
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   isProd,
+		SameSite: http.SameSiteLaxMode,
+		MaxAge:   0,
+	}
+	http.SetCookie(c.Writer, &cookie)
+
+	c.String(200, "ok")
 }
 
 
