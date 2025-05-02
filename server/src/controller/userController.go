@@ -1,14 +1,10 @@
 package controller
 
 import (
-	"hash/maphash"
 	"log"
 	"net/http"
 	"os"
-
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
-	"github.com/mandah0628/weatherapp/server/src/config"
 	"github.com/mandah0628/weatherapp/server/src/database"
 	"github.com/mandah0628/weatherapp/server/src/model"
 	"github.com/mandah0628/weatherapp/server/src/utils"
@@ -167,6 +163,7 @@ func UpdateUser(c *gin.Context) {
 		c.JSON(400, gin.H{
 			"error" : "Invalid data",
 		})
+		return
 	}
 
 	// whitelist fields that can be changed
@@ -183,14 +180,48 @@ func UpdateUser(c *gin.Context) {
 	}
 
 	// parse user id string into uuid
-	uid, err := uuid.Parse()
+	userUuid, err := utils.ParseStringToUuid(c.GetString("userId"))
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error" : "Invalid user id",
 		})
+		return
 	}
 
 
-	if err := database.UpdateUser()
+	if err := database.UpdateUser(userUuid, newData); err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
 
+	c.String(200, "ok")
+}
+
+
+func GetUserByID(c *gin.Context) {
+
+	// get user id and parse it to uuid
+	userUuid, err := utils.ParseStringToUuid(c.GetString("userId"))
+	if err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
+
+	// get user from db
+	user, err := database.FindUserByID(userUuid)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
+
+	
+	c.JSON(200, gin.H{
+		"user" : user,
+	})
 }
