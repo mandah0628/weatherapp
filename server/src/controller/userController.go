@@ -39,7 +39,7 @@ func RegisterUser(c *gin.Context) {
 	}
 
 	// build user model
-	user := model.User {
+	user := model.User{
 		Name: requestBody.Name,
 		Email: requestBody.Email,
 		Password: hashedPassword,
