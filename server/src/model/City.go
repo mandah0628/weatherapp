@@ -12,10 +12,10 @@ type City struct{
 	CountryCode string 			`gorm:"not null;size:2"`
 	Lat	float64 				`gorm:"not null"`
 	Lon float64 				`gorm:"not null"`
+	UserID uuid.UUID 			`gorm:"type:uuid;not null"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt
-	UserID uuid.UUID 			`gorm:"type:uuid;not null"`
 }
 
 func (city *City) BeforeCreate(tx *gorm.DB) (err error) {
