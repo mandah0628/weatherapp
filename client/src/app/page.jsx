@@ -1,7 +1,7 @@
-import displayTime  from "@/utils/displayTime";
+import displayTime  from "@/utils/DisplayTime";
 import calculateCurrentWeek from "@/utils/calculateCurrentWeek";
-import uvIndex from "@/utils/uvIndex";
-import visibility from "@/utils/visibility";
+import uvIndex from "@/utils/UvIndexToText";
+import visibility from "@/utils/VisibilityToText";
 
 
 export default function WeatherInfo({weatherData,cityName})

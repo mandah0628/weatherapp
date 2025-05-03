@@ -1,4 +1,4 @@
-export default function calculateCurrentWeek(weatherData){
+export default function CalculateCurrentWeek(weatherData){
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     
     // converts unix time to JS date and get the day of the week

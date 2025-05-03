@@ -1,4 +1,4 @@
-export default function visibility(weatherData){
+export default function VisibilityToText(weatherData){
   const visibilityMeters = weatherData.current.visibility;
   if (visibilityMeters < 50) {
     return "Dense fog";
