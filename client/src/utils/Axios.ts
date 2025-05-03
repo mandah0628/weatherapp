@@ -8,7 +8,7 @@ export const AxiosBackend : AxiosInstance = axios.create({
 });
 
 export const AxiosWeather : AxiosInstance = axios.create({
-    baseURL: process.env.WEATHER_API_URL
+    baseURL: process.env.NEXT_PUBLIC_WEATHER_API_URL
 });
 
 export const AxiosGeolocation : AxiosInstance = axios.create({
