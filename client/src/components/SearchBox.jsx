@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import fetchCities from "@/utils/fetchCities";
+import fetchCities from "@/utils/FetchCities";
 import { useRouter } from "next/navigation";
-import Dropdown from "@/components/Dropdown";
+import Dropdown from "@/components/SearchSuggestions";
 
 export default function SearchBox() 
 {

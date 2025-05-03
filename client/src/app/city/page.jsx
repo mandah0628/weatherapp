@@ -1,6 +1,6 @@
 "use client";
 
-import WeatherInfo from "@/components/WeatherInfo";
+import WeatherInfo from "@/app/page";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchWeather } from "@/utils/fetchWeather";

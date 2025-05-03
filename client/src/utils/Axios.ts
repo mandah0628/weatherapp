@@ -12,6 +12,6 @@ export const AxiosWeather : AxiosInstance = axios.create({
 });
 
 export const AxiosGeolocation : AxiosInstance = axios.create({
-    baseURL: process.env.GEOLICATION_API_URL
+    baseURL: process.env.NEXT_PUBLIC_GEOLICATION_API_URL
 });
 

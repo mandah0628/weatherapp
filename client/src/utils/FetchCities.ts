@@ -1,6 +1,6 @@
 import { AxiosGeolocation } from "./Axios";
 
-const apiKey = process.env.OPENWEATHER_API_KEY;
+const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 
 export default async function fetchCities(query : string, limit : number = 10) {
   if (!query) return []; 
