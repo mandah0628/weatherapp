@@ -10,6 +10,7 @@ import (
 func AddCity(c *gin.Context){
 	// build request body struct
 	var requestBody struct{
+		Name string					`json:"name"`
 		CountryName string 			`json:"countryName"`
 		CountryCode string 			`json:"countryCode"`
 		Lat	float64 				`json:"lat"`

@@ -8,6 +8,7 @@ import (
 
 type City struct{
 	ID uuid.UUID 				`gorm:"type:uuid;primaryKey"`
+	Name string					`gorm:"not null;size:50"`
 	CountryName string 			`gorm:"not null;size:50"`
 	CountryCode string 			`gorm:"not null;size:2"`
 	Lat	float64 				`gorm:"not null"`
