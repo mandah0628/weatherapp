@@ -73,6 +73,7 @@ func main() {
 
 	// import routes
 	routes.UserRoutes(router)
+	routes.CityRoutes(router)
 
 
 	// load port from env
