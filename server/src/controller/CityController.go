@@ -1,9 +1,7 @@
 package controller
 
 import (
-	"os"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"github.com/mandah0628/weatherapp/server/src/database"
 	"github.com/mandah0628/weatherapp/server/src/model"
 	"github.com/mandah0628/weatherapp/server/src/utils"
@@ -59,6 +57,25 @@ func AddCity(c *gin.Context){
 
 
 func RemoveCity(c *gin.Context){
+
+	// get cityId from params and parse to uuid
+	cityId := c.Param("cityId")
+	cityUuid, err := utils.ParseStringToUuid(cityId)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
+
+	// remove city from db
+	if err := database.RemoveCity(cityUuid); err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
+
 	c.String(200, "ok")
 }
 
