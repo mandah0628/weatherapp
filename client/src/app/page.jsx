@@ -1,5 +1,5 @@
 import displayTime  from "@/utils/DisplayTime";
-import calculateCurrentWeek from "@/utils/calculateCurrentWeek";
+import calculateCurrentWeek from "@/utils/CalculateCurrentWeek";
 import uvIndex from "@/utils/UvIndexToText";
 import visibility from "@/utils/VisibilityToText";
 

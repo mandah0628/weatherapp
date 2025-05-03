@@ -1,4 +1,4 @@
-export default function displayTime(unixTimestamp) {
+export default function DisplayTime(unixTimestamp) {
   // Convert to milliseconds and create a Date object
   const date = new Date(unixTimestamp * 1000);
 
