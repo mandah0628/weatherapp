@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"log"
 	"net/http"
 	"os"
 	"github.com/gin-gonic/gin"
@@ -22,7 +21,6 @@ func RegisterUser(c *gin.Context) {
 
 	// extract the request body and store in requestBody
 	if err := c.ShouldBindJSON(&requestBody); err != nil {
-		log.Println("JSON binding error:", err)
 		c.JSON(400, gin.H{"error": "Bad request"})
 		return
 	}
@@ -90,7 +88,6 @@ func LoginUser(c *gin.Context) {
 
 	// bind json to struct
 	if err := c.ShouldBindJSON(&requestBody); err != nil {
-		log.Println("Error binding JSON")
 		c.JSON(400, gin.H{
 			"error" : "Bad request",
 		})
