@@ -1,12 +1,11 @@
-export default function DisplayTime(unixTimestamp) {
+export default function DisplayTime(unixTimestamp : number) {
   // Convert to milliseconds and create a Date object
-  const date = new Date(unixTimestamp * 1000);
+  const date : Date = new Date(unixTimestamp * 1000);
 
-  // Set formatting options for 24-hour format
+  // format options
   const options = {
     hour: '2-digit',
-    minute: '2-digit',
-    hour12: false, // Force 24-hour format
+    hour12: false, 
   };
 
   // Return the formatted time
