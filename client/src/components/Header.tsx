@@ -1,4 +1,4 @@
-export default function SideBar() {
+export default function Header() {
     return(
         <div>
             
