@@ -1,22 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import fetchCities from "@/utils/FetchCities";
-import { useRouter } from "next/navigation";
-import Dropdown from "@/components/SearchSuggestions";
+import FetchCities from "@/utils/FetchCities";
+import SearchSuggestions from "@/components/SearchSuggestions";
 
-export default function SearchBox() 
+export default function SearchBox({updateCoords} : {updateCoords : any}) 
 {
-  const router  = useRouter();
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
-  const cityQueryChange = async(e) => {
+  const cityQueryChange = async(e : any) => {
       const userInput = e.target.value;
-      setQuery(userInput);
+      setQuery(e.targer.value);
 
       if(userInput) {
-          const cities = await fetchCities(userInput);
+          const cities = await FetchCities(userInput);
           setSuggestions(cities);
       } else {
         setSuggestions([]);
@@ -33,11 +31,11 @@ export default function SearchBox()
         className="border p-2 rounded-lg w-full"
       />
       {suggestions.length > 0 && (
-        <Dropdown
-          items={suggestions}
-          onSelect={(city) => 
+        <SearchSuggestions
+          citySuggestions={suggestions}
+          onSelect={(city : any) => 
             {
-              router.push(`/city?lat=${city.lat}&lon=${city.lon}&city=${encodeURIComponent(city.name)}`)
+              updateCoords({lat: city.lat, lon: city.lon})
               setQuery(city.name);
               setSuggestions([]);
             }}
