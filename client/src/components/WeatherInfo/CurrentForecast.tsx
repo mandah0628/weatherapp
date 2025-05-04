@@ -1,7 +1,7 @@
 import DisplayTime from "@/utils/DisplayTime";
 import UvIndexToText from "@/utils/UvIndexToText";
 
-export default function CurrentForecast({ currentWeather }: { currentWeather: any }) {
+export default function CurrentForecast({ currentWeather }:  any ) {
   if (!currentWeather) return <p>Loading current weather...</p>;
 
   return (

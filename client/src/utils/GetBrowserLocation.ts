@@ -18,9 +18,6 @@ export default async function GetBrowserLocation() {
       }
     });
 
-    console.log("Latitude:", coords.lat);
-    console.log("Longitude:", coords.lon);
-
     return coords
   } catch (err: any) {
     console.error("Failed to get location:", err.message);

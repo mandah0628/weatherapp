@@ -1,5 +1,4 @@
 export default function VisibilityToText(visibility : number) :string{
-  console.log("Visibility:",visibility)
   if (visibility < 50) {
     return "Dense fog";
   } else if (visibility >= 50 && visibility < 200) {

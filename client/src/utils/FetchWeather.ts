@@ -1,6 +1,6 @@
 import { AxiosWeather } from '@/utils/Axios';
 
-const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 
 /**
  * 
@@ -10,7 +10,7 @@ const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
  */
 export default async function FetchWeather(lat : string, lon : string){
     try{
-        const queryString  =`/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+        const queryString  =`/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
         const res = await AxiosWeather.get(queryString);
     
         return res;
