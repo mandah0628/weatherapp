@@ -1,11 +1,14 @@
-export default function HourlyForecast({data}) {
+import DisplayTime from "@/utils/DisplayTime";
+
+
+export default function HourlyForecast({data} : any) {
     return (
         <div className=" bg-purple-500">
             <h1>Hourly forecast</h1>
             <ul>
-            {hourly.slice(0, 24).map((hourlyData, index) => (
+            {data.slice(0, data.length).map((hourlyWeather : any, index : number) => (
                 <li key={index}>
-                    {`${displayTime(hourlyData.dt)}: ${Math.round(hourlyData.temp)}°`}
+                    {`${DisplayTime(data[index].dt)}: ${Math.round(data[index].temp)}°`}
                 </li>
             ))}
             </ul>

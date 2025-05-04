@@ -1,13 +1,16 @@
-export default function WeeklyForecast({data}){
+import CalculateCurrentWeek from "@/utils/CalculateCurrentWeek"
+
+export default function WeeklyForecast({data} : any){
+    const currentWeekdays : string[] = CalculateCurrentWeek(data)
     return(
-        <div className="flex flex-col justify-center content-center bg-green-500">
+        <div className="bg-green-500">
             <h1>Weekly forecast</h1>
             <ul>
-            {currentWeek.slice(0, weatherData.daily.length).map((day, index) => (
-            <li key={index}>
-                {day === currentDay ? "Today" : day}: {Math.round(weatherData.daily[index].temp.max)}°/{Math.round(weatherData.daily[index].temp.min)}°
-            </li>
-            ))}
+                {currentWeekdays.slice(0,7).map((day : string, index : number) => (
+                <li key={index}>
+                    {index === 0 ? "Today" : currentWeekdays[index]}: {Math.round(data[index].temp.max)}°/{Math.round(data[index].temp.min)}°
+                </li>
+                ))}
             </ul>
         </div>
     )
