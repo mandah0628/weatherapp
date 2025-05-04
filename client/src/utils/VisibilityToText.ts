@@ -1,24 +1,24 @@
-export default function VisibilityToText(weatherData){
-  const visibilityMeters = weatherData.current.visibility;
-  if (visibilityMeters < 50) {
+export default function VisibilityToText(visibility : number) :string{
+  console.log("Visibility:",visibility)
+  if (visibility < 50) {
     return "Dense fog";
-  } else if (visibilityMeters >= 50 && visibilityMeters < 200) {
+  } else if (visibility >= 50 && visibility < 200) {
     return "Thick fog";
-  } else if (visibilityMeters >= 200 && visibilityMeters < 500) {
+  } else if (visibility >= 200 && visibility < 500) {
     return "Moderate fog";
-  } else if (visibilityMeters >= 500 && visibilityMeters < 1000) {
+  } else if (visibility >= 500 && visibility < 1000) {
     return "Light fog";
-  } else if (visibilityMeters >= 1000 && visibilityMeters < 2000) {
+  } else if (visibility >= 1000 && visibility < 2000) {
     return "Thin fog";
-  } else if (visibilityMeters >= 2000 && visibilityMeters < 4000) {
+  } else if (visibility >= 2000 && visibility < 4000) {
     return "Haze";
-  } else if (visibilityMeters >= 4000 && visibilityMeters < 10000) {
+  } else if (visibility >= 4000 && visibility < 10000) {
     return "Light haze";
-  } else if (visibilityMeters >= 10000 && visibilityMeters < 20000) {
+  } else if (visibility >= 10000 && visibility < 20000) {
     return "Clear";
-  } else if (visibilityMeters >= 20000 && visibilityMeters < 50000) {
+  } else if (visibility >= 20000 && visibility < 50000) {
     return "Very clear";
-  } else if (visibilityMeters > 50000) {
+  } else if (visibility > 50000) {
     return "Exceptionally clear";
   } else {
     return "Unknown condition";
