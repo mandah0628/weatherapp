@@ -1,5 +1,6 @@
 export default function GetWeatherAnimation(code:number, isNight : boolean, windSpeed : number) :string{
     const isWindy :  boolean = windSpeed > 11
+
     switch (true) {
         // thunderstorm
         case code >= 200 && code < 300:
@@ -11,7 +12,7 @@ export default function GetWeatherAnimation(code:number, isNight : boolean, wind
     
         // rain
         case code >= 500 && code < 600:
-          return "rain.json";
+          return "rainy.json";
     
         // snow
         case code >= 600 && code <= 610:
@@ -19,15 +20,15 @@ export default function GetWeatherAnimation(code:number, isNight : boolean, wind
 
         // snow and rain
         case code >= 611 && code < 700:
-            return "snowandrain.json"
+            return "snowandrainy.json"
 
         // fog and mist
         case code === 701 || code === 741:
-          return "fog.json";
+          return "foggy.json";
 
         // smoke and pollutants
         case [711,721,731,751,761,762].includes(code):
-          return "smoke.json"; 
+          return "smoky.json"; 
     
         // clear skies
         case code === 800:
