@@ -1,6 +1,7 @@
 /**
- * Formats an offset adjusted unix timestamp to a readable time format, displaying hour and minutes
- * @param offsetAdjustedTime Offset adjusted unix timestamp in seconds
+ * Formats an offset adjusted unix timestamp to a readable time format, displaying hour and minutes.
+ * @param offsetAdjustedTime Offset adjusted unix timestamp in seconds.
+ * @returns A string displaying the hour and minutes.
  */
 export default function DisplayTime( offsetAdjustedTime: number) :string{
   
