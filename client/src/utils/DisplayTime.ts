@@ -1,14 +1,15 @@
-export default function DisplayTime(unixTimestamp : number) {
-  // Convert to milliseconds and create a Date object
-  const date : Date = new Date(unixTimestamp * 1000);
+/**
+ * Formats an offset adjusted unix timestamp to a readable time format, displaying hour and minutes
+ * @param offsetAdjustedTime Offset adjusted unix timestamp in seconds
+ */
+export default function DisplayTime( offsetAdjustedTime: number) :string{
+  
+  const date = new Date(offsetAdjustedTime * 1000);
 
-  // format options
-  const options = {
+  return date.toLocaleTimeString("en-GB", {
     hour: '2-digit',
-    hour12: false, 
-  };
-
-  // Return the formatted time
-  return date.toLocaleTimeString([], options);
+    minute: '2-digit',
+    hour12: false,
+    timeZone: "UTC"
+  });
 }
-
