@@ -11,7 +11,7 @@ export default function SearchBox({updateCoords} : {updateCoords : any})
 
   const cityQueryChange = async(e : any) => {
       const userInput = e.target.value;
-      setQuery(e.targer.value);
+      setQuery(e.target.value);
 
       if(userInput) {
           const cities = await FetchCities(userInput);
@@ -28,7 +28,7 @@ export default function SearchBox({updateCoords} : {updateCoords : any})
         value={query}
         onChange={cityQueryChange}
         placeholder="Search for a city"
-        className="border p-2 rounded-lg w-full"
+        className="p-2 border rounded-xl focus:outline-none w-full"
       />
       {suggestions.length > 0 && (
         <SearchSuggestions
