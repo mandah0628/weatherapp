@@ -1,6 +1,6 @@
 export default function SearchSuggestions({ citySuggestions, onSelect } : {citySuggestions : any, onSelect : any}) {
   return (
-    <ul className="absolute left-0 right-0 bg-white border rounded-lg mt-2 max-h-60 overflow-y-auto">
+    <ul className="absolute w-full border rounded-lg mt-2 max-h-48 overflow-y-auto">
       {citySuggestions.map((city : any, index : any) => (
         <li
           key={index}
