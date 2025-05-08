@@ -1,4 +1,4 @@
-export default function GetWeatherAnimation(code:number, isNight : boolean, windSpeed : number) :string{
+export default function GetWeatherAnimation(code:number, isDay : boolean, windSpeed : number) :string{
     const isWindy :  boolean = windSpeed > 11
 
     switch (true) {
@@ -32,11 +32,11 @@ export default function GetWeatherAnimation(code:number, isNight : boolean, wind
     
         // clear skies
         case code === 800:
-            return isWindy ? "windy.json" : (isNight ? "clearnight.json" : "clearday.json")
+            return isWindy ? "windy.json" : (isDay ? "clearday.json" : "clearnight.json")
     
         // few clouds
         case code === 801:
-            return isWindy ? "windy.json" : (isNight ? "cloudynight.json" : "cloudyday.json")
+            return isWindy ? "windy.json" : (isDay ? "clearday.json" : "clearnight.json")
     
         // clouds
         case [802,803,804].includes(code):
