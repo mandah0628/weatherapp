@@ -44,7 +44,7 @@ export default function TodayExtra({data, timezoneOffset} : {data : any, timezon
 
 
             {/* right div */}
-            <div className="flex flex-col items-center justify-evenly h-full flex-1">
+            <div className="flex flex-col items-center justify-evenly h-full flex-1 ">
                 <div className="flex flex-col items-center">
                     <p>Wind: {Math.round(data.wind_speed)}m/s</p>
                     <div className="w-36 h-36">
