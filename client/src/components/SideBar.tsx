@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 
 
-export default function Sidebar({ isOpen, cities, onClose }: any) {
+export default function SideBar({ isOpen, cities, onClose }: any) {
   return (
     <AnimatePresence>
       {isOpen && (

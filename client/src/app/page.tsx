@@ -10,7 +10,7 @@ import TodayExtra from "@/components/WeatherInfo/TodayExtra";
 import GoogleMap from "@/components/WeatherInfo/GoogleMap";
 import FetchCity from "@/utils/FetchCityReverse";
 import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
+import SideBar from "@/components/SideBar";
 import Tomorrow from "@/components/WeatherInfo/Tomorrow";
 import ExtraCities from "@/components/WeatherInfo/ExtraCities";
 
@@ -84,7 +84,7 @@ export default function WeatherInfo() {
   
       {/* Sidebar */}
       <div className="border">
-        <Sidebar
+        <SideBar
           cities={[{ name: "ub" }, { name: "sk" }, { name: "is" }]}
           isOpen={isSidebarOpen}
           onClose={toggleSidebar}
