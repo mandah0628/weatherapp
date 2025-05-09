@@ -1,3 +1,5 @@
+"use client"
+
 import FetchCanadianCities, { cities } from "@/utils/FetchCanadianCities";
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation";
 import Lottie from "lottie-react";
