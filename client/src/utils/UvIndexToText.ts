@@ -1,4 +1,4 @@
-export default function UvIndexToText(index){
+export default function UvIndexToText(index :number){
     if(index < 3){
         return "Low"
     } else if(index >=3 && index < 6){

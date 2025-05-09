@@ -2,7 +2,7 @@ import Capitalize from "@/utils/Capitalize"
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation"
 import Lottie from "lottie-react"
 
-export default function({tomorrowData} :any) {
+export default function Tomorrow({tomorrowData} :any) {
     return (
         <div className="w-full flex flex-row 2xl:flex-col 2xl:justify-around justify-between items-center text-2xl font-medium text-center h-[90%]" title={tomorrowData.summary}>
             <div className="flex flex-col pl-5 gap-5 h-fit">
