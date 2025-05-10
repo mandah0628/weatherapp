@@ -11,6 +11,9 @@ import snowy from "../../public/weatherAnimations/snowy.json";
 import snowandrainy from "../../public/weatherAnimations/snowandrainy.json";
 import thunderstorm from "../../public/weatherAnimations/thunderstorm.json";
 import windy from "../../public/weatherAnimations/windy.json";
+import humidity from "../../public/extra/humidity.json"
+import uvIndex from "../../public/extra/uvIndex.json"
+import visibility from "../../public/extra/visibility.json"
 
 const WeatherAnimations: Record<string, any> = {
     "clearday.json": clearday,
@@ -26,6 +29,7 @@ const WeatherAnimations: Record<string, any> = {
     "windy.json": windy,
     "cloudynight.json": cloudynight,
     "cloudyday.json": cloudyday
+
 }
 
 export default WeatherAnimations
