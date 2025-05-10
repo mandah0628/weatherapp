@@ -10,8 +10,7 @@ export const cities : any[] = [
     {city: "Regina", province: "SK"}
 ]
 
-export default async function FetchCanadianCities() : Promise<any>{
-
+export default async function FetchCanadianCities(inputCities : any[] = cities) : Promise<any>{
 
     try {
         const cityData = await Promise.all(cities.map( (city) => FetchCityDirect(city) ))
