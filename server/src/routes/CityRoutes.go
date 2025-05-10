@@ -11,4 +11,5 @@ func CityRoutes(router *gin.Engine){
 
 	cityGroup.POST("/add-city", controller.AddCity)
 	cityGroup.DELETE("/remove-city/:cityId", controller.RemoveCity)
+	cityGroup.GET("/get-cities", controller.GetAllCities)
 }
