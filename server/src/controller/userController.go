@@ -78,6 +78,9 @@ func RegisterUser(c *gin.Context) {
 }
 
 
+func VerifyToken(c*gin.Context) {
+	c.String(200, "Ok")
+}
 
 func LoginUser(c *gin.Context) {
 	// build struct
