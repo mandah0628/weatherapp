@@ -2,7 +2,7 @@
 
 import DisplayTime from "@/utils/DisplayTime";
 import { MapPin } from "lucide-react";
-import Lottie from "lottie-react";
+import Lottie from "@/utils/LottieClient";
 import CalculateCurrentWeek from "@/utils/CalculateCurrentWeek";
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation";
 import Capitalize from "@/utils/Capitalize";

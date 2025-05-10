@@ -2,7 +2,7 @@
 
 import Capitalize from "@/utils/Capitalize"
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation"
-import Lottie from "lottie-react"
+import Lottie from "@/utils/LottieClient";
 import WeatherAnimations from "@/utils/WeatherAnimations"
 
 export default function Tomorrow({tomorrowData} :any) {

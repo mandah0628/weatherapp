@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { CircleChevronLeft, CircleChevronRight } from "lucide-react";
 import DisplayTime from "@/utils/DisplayTime";
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation";
-import Lottie from "lottie-react";
+import Lottie from "@/utils/LottieClient";
 import { AnimatePresence, motion } from "framer-motion";
 import WeatherAnimations from "@/utils/WeatherAnimations";
 

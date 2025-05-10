@@ -3,7 +3,7 @@
 import DisplayTime from "@/utils/DisplayTime"
 import UvIndexToText from "@/utils/UvIndexToText"
 import VisibilityToText from "@/utils/VisibilityToText"
-import Lottie from "lottie-react"
+import Lottie from "@/utils/LottieClient";
 import WeatherAnimations from "@/utils/WeatherAnimations"
 
 

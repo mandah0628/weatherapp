@@ -1,5 +1,6 @@
 "use client"
 
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import GetBrowserLocation from "@/utils/GetBrowserLocation";
 import FetchWeather from "@/utils/FetchWeather";
@@ -7,14 +8,19 @@ import CurrentForecast from "@/components/WeatherInfo/CurrentForecast";
 import HourlyForecast from "@/components/WeatherInfo/HourlyForecast";
 import WeeklyForecast from "@/components/WeatherInfo/WeeklyForecast";
 import TodayExtra from "@/components/WeatherInfo/TodayExtra";
-import GoogleMap from "@/components/WeatherInfo/GoogleMap";
+
+
+const GoogleMap = dynamic(
+  () => import("@/components/WeatherInfo/GoogleMap"),
+  { ssr: false }
+);
+
 import FetchCity from "@/utils/FetchCityReverse";
 import Header from "@/components/Header";
 import SideBar from "@/components/SideBar";
 import Tomorrow from "@/components/WeatherInfo/Tomorrow";
 import ExtraCities from "@/components/WeatherInfo/ExtraCities";
 import GetBackground from "@/utils/GetBackground";
-import WeatherAnimations from "@/utils/WeatherAnimations";
 
 
 

@@ -1,25 +1,20 @@
-export default async function GetBrowserLocation() {
-  try {
-    const coords: { lat: number; lon: number } = await new Promise((resolve, reject) => {
-      if (!navigator.geolocation) {
-        reject(new Error("Geolocation is not supported by your browser."));
-      } else {
-        navigator.geolocation.getCurrentPosition((position) => {
-          resolve({
-            lat: position.coords.latitude,
-            lon: position.coords.longitude,
-          });
-          },
-          
-          (error) => {
-            reject(new Error(`Error getting location: ${error.message}`));
-          }
-        );
-      }
-    });
+export default function GetBrowserLocation(): Promise<{ lat: number; lon: number }> {
+  return new Promise((resolve, reject) => {
+    
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      return reject(new Error("Geolocation API is not available in this environment."));
+    }
 
-    return coords
-  } catch (err: any) {
-    console.error("Failed to get location:", err.message);
-  }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        resolve({
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        });
+      },
+      (error) => {
+        reject(new Error(`Error getting location: ${error.message}`));
+      }
+    );
+  });
 }

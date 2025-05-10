@@ -2,7 +2,7 @@
 
 import FetchCanadianCities, { cities } from "@/utils/FetchCanadianCities";
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation";
-import Lottie from "lottie-react";
+import Lottie from "@/utils/LottieClient";
 import { useEffect, useState } from "react"
 import { MapPin } from "lucide-react";
 import WeatherAnimations from "@/utils/WeatherAnimations";
