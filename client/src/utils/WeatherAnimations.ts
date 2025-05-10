@@ -28,7 +28,10 @@ const WeatherAnimations: Record<string, any> = {
     "thunderstorm.json": thunderstorm,
     "windy.json": windy,
     "cloudynight.json": cloudynight,
-    "cloudyday.json": cloudyday
+    "cloudyday.json": cloudyday,
+    "humidity.json": humidity,
+    "uvIndex.json": uvIndex,
+    "visibility.json": visibility
 
 }
 
