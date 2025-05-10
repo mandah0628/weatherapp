@@ -16,5 +16,6 @@ func UserRoutes(router *gin.Engine) {
 		userGroup.Use(middleware.ValidateToken())
 		userGroup.PUT("/update-user", controller.UpdateUser)
 		userGroup.GET("/get-user", controller.GetUserByID)
+		userGroup.POST("/verify-token", controller.VerifyToken)
 	}
 }
