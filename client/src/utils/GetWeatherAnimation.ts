@@ -16,7 +16,7 @@ export default function GetWeatherAnimation(code:number, isDay : boolean, windSp
     
         // snow
         case code >= 600 && code <= 610:
-          return "snow.json";
+          return "snowy.json";
 
         // snow and rain
         case code >= 611 && code < 700:
@@ -36,7 +36,7 @@ export default function GetWeatherAnimation(code:number, isDay : boolean, windSp
     
         // few clouds
         case code === 801:
-            return isWindy ? "windy.json" : (isDay ? "clearday.json" : "clearnight.json")
+            return isWindy ? "windy.json" : (isDay ? "cloudyday.json" : "cloudynight.json")
     
         // clouds
         case [802,803,804].includes(code):

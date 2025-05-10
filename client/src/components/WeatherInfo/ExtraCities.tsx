@@ -5,6 +5,7 @@ import GetWeatherAnimation from "@/utils/GetWeatherAnimation";
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react"
 import { MapPin } from "lucide-react";
+import WeatherAnimations from "@/utils/WeatherAnimations";
 
 export default function ExtraCities({updateCoords} :any) {
     const [loading, setLoading] = useState<boolean>(true);
@@ -36,7 +37,7 @@ export default function ExtraCities({updateCoords} :any) {
             {data.slice(0, 6).map((cityData: any, index: number) => (
               <div
                 key={index}
-                className="bg-green-400 p-3 rounded-xl flex flex-col justify-between cursor-pointer"
+                className="p-3 rounded-xl flex flex-col justify-between cursor-pointer"
                 onClick={() =>
                   updateCoords({ lat: cityData.data.lat, lon: cityData.data.lon })
                 }
@@ -44,7 +45,7 @@ export default function ExtraCities({updateCoords} :any) {
                 <div>
                   <div className="flex items-center">
                     <MapPin size={20} />
-                    <p className="font-bold ml-2">{cities[index].city}</p>
+                    <p className="font-bold text-2xl ml-2">{cities[index].city}</p>
                   </div>
       
                   <div className="text-sm mt-2">
@@ -57,11 +58,7 @@ export default function ExtraCities({updateCoords} :any) {
       
                 <div className="max-w-60">
                   <Lottie
-                    animationData={require(`../../../public/${GetWeatherAnimation(
-                      cityData.data.current.weather[0].id,
-                      true,
-                      cityData.data.current.wind_speed
-                    )}`)}
+                    animationData={WeatherAnimations[GetWeatherAnimation(cityData.data.current.weather[0].id, true, cityData.data.current.wind_speed)]}
                     style={{ width: "100%", height: "100%" }}
                   />
                 </div>

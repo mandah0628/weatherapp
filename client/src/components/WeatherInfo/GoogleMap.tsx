@@ -1,6 +1,6 @@
 "use client"
 
-import { AdvancedMarker, APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import { AdvancedMarker, APIProvider, Map } from "@vis.gl/react-google-maps";
 
 
 export default function GoogleMap({coords} : any) {

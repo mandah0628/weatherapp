@@ -1,9 +1,12 @@
+"use client"
+
 import DisplayTime from "@/utils/DisplayTime";
 import { MapPin } from "lucide-react";
 import Lottie from "lottie-react";
 import CalculateCurrentWeek from "@/utils/CalculateCurrentWeek";
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation";
 import Capitalize from "@/utils/Capitalize";
+import WeatherAnimations from "@/utils/WeatherAnimations";
 
 export default function CurrentForecast({ currentData, cityName, timezoneOffset} 
   : {currentData:any, cityName : string, timezoneOffset : number} ) {
@@ -36,8 +39,7 @@ export default function CurrentForecast({ currentData, cityName, timezoneOffset}
         {/* right div */}
         <div className="flex-col flex-1 justify-center items-center">
           <div className="max-w-64">
-            <Lottie animationData={require(`../../../public/${GetWeatherAnimation(currentData.weather[0].id, 
-              (currentData.dt > currentData.sunrise)&&(currentData.dt < currentData.sunset), currentData.wind_speed)}`)}
+            <Lottie animationData={WeatherAnimations[GetWeatherAnimation(currentData.weather[0].id, (currentData.dt > currentData.sunrise)&&(currentData.dt < currentData.sunset), currentData.wind_speed)]}
               style={{width:"100%", height:"100%"}}
             />
           </div>

@@ -1,13 +1,16 @@
+"use client"
+
 import CalculateCurrentWeek from "@/utils/CalculateCurrentWeek"
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation"
+import WeatherAnimations from "@/utils/WeatherAnimations"
 import Lottie from "lottie-react"
 
 export default function WeeklyForecast({dailyData, time,timezoneOffset} : {dailyData : any, time : number, timezoneOffset:number}){
     const currentWeekdays : string[] = CalculateCurrentWeek(time + timezoneOffset)
 
     return(
-        <div className=" flex flex-col justify-evenly w-full h-full font-medium text-center text-xl border rounded-2xl">
-            <div className="flex flex-col w-full gap-2 flex-1 bg-amber-100">
+        <div className=" flex flex-col justify-evenly w-full h-full font-medium text-center text-xl">
+            <div className="flex flex-col w-full gap-2 flex-1">
                 {dailyData.map((dayWeather : any, index : number) => (
                    
                 <div className="flex gap-4 items-center flex-1" key={index}>
@@ -18,7 +21,7 @@ export default function WeeklyForecast({dailyData, time,timezoneOffset} : {daily
 
                     <div className="h-24 w-24 flex-1">
                         <Lottie 
-                            animationData={require(`../../../public/${GetWeatherAnimation(dayWeather.weather[0].id, true, dayWeather.wind_speed)}`)}
+                            animationData={WeatherAnimations[GetWeatherAnimation(dayWeather.weather[0].id, true, dayWeather.wind_speed)]}
                             style={{width:"100%", height:"100%"}}
                         >
                         </Lottie>

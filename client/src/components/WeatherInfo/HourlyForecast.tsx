@@ -1,4 +1,3 @@
-// components/WeatherInfo/HourlyForecast.tsx
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
@@ -7,6 +6,7 @@ import DisplayTime from "@/utils/DisplayTime";
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation";
 import Lottie from "lottie-react";
 import { AnimatePresence, motion } from "framer-motion";
+import WeatherAnimations from "@/utils/WeatherAnimations";
 
 type Props = {
   hourlyData: any[];
@@ -101,16 +101,16 @@ export default function HourlyForecast({
             {visible.map((hour: any, index: number) => (
               <li
                 key={index}
-                className="w-16 flex flex-col items-center bg-amber-400 rounded-md"
+                className="w-16 flex flex-col items-center"
               >
                 <p className="text-xs pt-1"> {DisplayTime(hour.dt + timezoneOffset)}</p>
                 <div className="w-14 h-14">
                   <Lottie
-                    animationData={require(`../../../public/${GetWeatherAnimation(
+                    animationData={WeatherAnimations[GetWeatherAnimation(
                       hour.weather[0].id,
                       isDay(hour.dt),
                       hour.wind_speed
-                    )}`)}
+                    )]}
                     style={{ width: "100%", height: "100%" }}
                   />
                 </div>

@@ -1,6 +1,9 @@
+"use client"
+
 import Capitalize from "@/utils/Capitalize"
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation"
 import Lottie from "lottie-react"
+import WeatherAnimations from "@/utils/WeatherAnimations"
 
 export default function Tomorrow({tomorrowData} :any) {
     return (
@@ -15,7 +18,7 @@ export default function Tomorrow({tomorrowData} :any) {
             <div className="flex flex-col items-center justify-center pr-5 h-fit">
                 <div className="flex-1">
                     <Lottie
-                        animationData={require(`../../../public/${GetWeatherAnimation(tomorrowData.weather[0].id, true, tomorrowData.wind_speed)}`)}
+                        animationData={WeatherAnimations[GetWeatherAnimation(tomorrowData.weather[0].id, true, tomorrowData.wind_speed)]}
                         style={{width:"100%", height:"100%"}}
                     > </Lottie>
                     <p>{Capitalize(tomorrowData.weather[0].description)}</p>
