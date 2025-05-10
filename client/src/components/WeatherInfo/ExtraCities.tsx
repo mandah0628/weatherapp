@@ -45,7 +45,7 @@ export default function ExtraCities({updateCoords} :any) {
                 <div>
                   <div className="flex items-center">
                     <MapPin size={20} />
-                    <p className="font-bold text-2xl ml-2">{cities[index].city}</p>
+                    <p className="font-bold text-xl ml-2">{cities[index].city}</p>
                   </div>
       
                   <div className="text-sm mt-2">
