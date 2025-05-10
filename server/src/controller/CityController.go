@@ -11,6 +11,7 @@ func AddCity(c *gin.Context){
 	// build request body struct
 	var requestBody struct{
 		Name string					`json:"name"`
+		State string				`json:"state"`
 		CountryName string 			`json:"countryName"`
 		CountryCode string 			`json:"countryCode"`
 		Lat	float64 				`json:"lat"`
@@ -64,7 +65,7 @@ func RemoveCity(c *gin.Context){
 	cityUuid, err := utils.ParseStringToUuid(cityId)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error" : "Internal server error",
+			"error" : "Missing user Id or unable to proccess",
 		})
 		return
 	}
@@ -80,4 +81,27 @@ func RemoveCity(c *gin.Context){
 	c.String(200, "ok")
 }
 
+func GetAllCities(c *gin.Context) {
+	userId := c.GetString("userId")
+	userUuid, err := utils.ParseStringToUuid(userId)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error" : "Missing user Id or unable to proccess",
+		})
+		return
+	}
 
+
+	cities, err := database.GetAllCities(userUuid)
+	if err != nil{
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"userCities" : cities,
+		"message" : "hola",
+	})
+}

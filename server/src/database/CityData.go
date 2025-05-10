@@ -14,3 +14,11 @@ func AddCity(city *model.City) error {
 func RemoveCity(cityUuid uuid.UUID) error {
 	return config.Postgres.Where("id = ?", cityUuid).Delete(&model.City{}).Error
 }
+
+func GetAllCities(userUuid uuid.UUID) ([]model.City, error) {
+	var cities []model.City
+
+	err := config.Postgres.Where("user_id = ?", userUuid).Find(&cities).Error
+
+	return cities,err
+}
