@@ -17,6 +17,7 @@ export default function ExtraCities({setWeatherCoords} : {setWeatherCoords : Dis
             try {
                 setLoading(true)
                 const arr = await FetchMuiltipleWeather()
+                console.log(arr)
                 setCityWeatherArr(arr)
     
             } catch (error) {
@@ -27,6 +28,7 @@ export default function ExtraCities({setWeatherCoords} : {setWeatherCoords : Dis
         })();
     }, [])
 
+    
 
     return (
         <div className="w-full h-full p-4">
@@ -46,16 +48,16 @@ export default function ExtraCities({setWeatherCoords} : {setWeatherCoords : Dis
                   </div>
       
                   <div className="text-sm mt-2">
-                    <p>Temp: {Math.round(cityData.data.current.temp)}°</p>
-                    <p>Feels like: {Math.round(cityData.data.current.feels_like)}°</p>
-                    <p>High: {Math.round(cityData.data.daily[0].temp.max)}°</p>
-                    <p>Low: {Math.round(cityData.data.daily[0].temp.min)}°</p>
+                    <p>Temp: {Math.round(cityData.current.temp)}°</p>
+                    <p>Feels like: {Math.round(cityData.current.feels_like)}°</p>
+                    <p>High: {Math.round(cityData.daily[0].temp.max)}°</p>
+                    <p>Low: {Math.round(cityData.daily[0].temp.min)}°</p>
                   </div>
                 </div>
       
                 <div className="max-w-60">
                   <Lottie
-                    animationData={WeatherAnimations[GetWeatherAnimation(cityData.data.current.weather[0].id, true, cityData.data.current.wind_speed)]}
+                    animationData={WeatherAnimations[GetWeatherAnimation(cityData.current.weather[0].id, true, cityData.current.wind_speed)]}
                     style={{ width: "100%", height: "100%" }}
                   />
                 </div>
