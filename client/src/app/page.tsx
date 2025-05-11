@@ -192,7 +192,7 @@ export default function WeatherInfo() {
       
   
       {/* Weather Info */}
-      <main className="gap-4 px-5 pt-5 grid grid-cols-12 xl:auto-rows-fr 2xl:auto-rows-fr auto-rows-auto">
+      <main className="gap-4 px-5 pt-5 grid grid-cols-12 xl:grid-rows-6 2xl:auto-rows-fr auto-rows-auto">
 
 
         <div className={`md:col-span-6 lg:col-span-6  xl:col-span-4 xl:row-span-4 
