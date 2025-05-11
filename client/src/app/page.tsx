@@ -165,7 +165,7 @@ export default function WeatherInfo() {
       sunset:weatherData.current.sunset, sunrise: weatherData.current.sunrise, offset: weatherData.timezone_offset, timestamp: weatherData.current.dt})
   const gridClass = `col-span-12 border rounded-2xl overflow-hidden min-w-[250px]`
   const cardClass = "bg-white/10 border border-white/20 rounded-2xl p-4 backdrop-blur-sm";
-  const isDay= (weatherData.cuurent.dt > weatherData.current.sunrise && weatherData.cuurent.dt < weatherData.cuurent.sunset)
+  const isDay= (weatherData.current.dt > weatherData.current.sunrise && weatherData.current.dt < weatherData.current.sunset)
 
   return (
     <div className={`min-h-screen pt-16 pb-5 ${backgroundClass}`}>
