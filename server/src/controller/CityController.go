@@ -12,8 +12,7 @@ func AddCity(c *gin.Context){
 	var requestBody struct{
 		Name string					`json:"name"`
 		State string				`json:"state"`
-		CountryName string 			`json:"countryName"`
-		CountryCode string 			`json:"countryCode"`
+		Country string 				`json:"country"`
 		Lat	float64 				`json:"lat"`
 		Lon float64 				`json:"lon"`
 	}
@@ -38,8 +37,9 @@ func AddCity(c *gin.Context){
 
 	//build city model
 	city := model.City{
-		CountryName: requestBody.CountryName,
-		CountryCode: requestBody.CountryCode,
+		Name: requestBody.Name,
+		State: requestBody.State,
+		Country: requestBody.Country,
 		Lat: requestBody.Lat,
 		Lon: requestBody.Lon,
 		UserID: userUuid,
@@ -102,6 +102,5 @@ func GetAllCities(c *gin.Context) {
 
 	c.JSON(200, gin.H{
 		"userCities" : cities,
-		"message" : "hola",
 	})
 }
