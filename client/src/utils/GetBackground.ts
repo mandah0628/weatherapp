@@ -1,5 +1,4 @@
 export default function GetBackground(timeData : any) :string{
-    console.log(timeData)
     const { sunrise, sunset, timestamp, offset } = timeData;
 
     const adjustedTimestamp :number = timestamp + offset

@@ -1,3 +1,8 @@
+/**
+ * Converts a numerical visibility value(in meters) into a text description
+ * @param visibility The visibility in meters
+ * @returns The text description of the visibility
+ */
 export default function VisibilityToText(visibility : number) :string{
   if (visibility < 50) {
     return "Dense fog";

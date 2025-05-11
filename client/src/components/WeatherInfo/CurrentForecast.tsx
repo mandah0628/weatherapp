@@ -1,20 +1,16 @@
 "use client"
 
-import DisplayTime from "@/utils/DisplayTime";
 import { MapPin } from "lucide-react";
 import Lottie from "@/utils/LottieClient";
+import DisplayTime from "@/utils/DisplayTime";
 import CalculateCurrentWeek from "@/utils/CalculateCurrentWeek";
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation";
 import Capitalize from "@/utils/Capitalize";
 import WeatherAnimations from "@/utils/WeatherAnimations";
 
 export default function CurrentForecast({ currentData, cityName, timezoneOffset} 
-  : {currentData:any, cityName : string, timezoneOffset : number} ) {
+  : {currentData :any, cityName : string, timezoneOffset : number} ) {
 
-    if (!currentData){
-      return <p>Loading current weather...</p>;
-    } 
-  
     return (
       <div className="w-full h-full flex flex-row items-center justify-center p-5">
 

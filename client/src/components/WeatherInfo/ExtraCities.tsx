@@ -1,23 +1,24 @@
 "use client"
 
-import FetchCanadianCities, { cities } from "@/utils/FetchCanadianCities";
+import FetchMuiltipleWeather from "@/utils/FetchMultipleWeather";
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation";
 import Lottie from "@/utils/LottieClient";
-import { useEffect, useState } from "react"
+import { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { MapPin } from "lucide-react";
 import WeatherAnimations from "@/utils/WeatherAnimations";
+import { Coords } from "@/utils/FetchWeather";
 
-export default function ExtraCities({updateCoords} :any) {
+export default function ExtraCities({setWeatherCoords} : {setWeatherCoords : Dispatch<SetStateAction<Coords | null>>}) {
     const [loading, setLoading] = useState<boolean>(true);
-    const [data, setData] = useState<any>(null)
+    const [cityWeatherArr, setCityWeatherArr] = useState<any[] | null>(null)
 
     useEffect(() => {
         (async () => {
             try {
                 setLoading(true)
-                const canadianCities = await FetchCanadianCities()
-                setData(canadianCities)
-                console.log(canadianCities)
+                const arr = await FetchMuiltipleWeather()
+                setCityWeatherArr(arr)
+    
             } catch (error) {
                 console.error()
             } finally {
@@ -27,25 +28,21 @@ export default function ExtraCities({updateCoords} :any) {
     }, [])
 
 
-    if(loading || !data){
-        return
-    }
-
     return (
         <div className="w-full h-full p-4">
           <div className="grid grid-cols-3 grid-rows-2 gap-4 w-full h-full">
-            {data.slice(0, 6).map((cityData: any, index: number) => (
+            {cityWeatherArr?.map((cityData: any, index: number) => (
               <div
                 key={index}
                 className="p-3 rounded-xl flex flex-col justify-between cursor-pointer"
                 onClick={() =>
-                  updateCoords({ lat: cityData.data.lat, lon: cityData.data.lon })
+                  setWeatherCoords({ lat: cityData.data.lat, lon: cityData.data.lon })
                 }
               >
                 <div>
                   <div className="flex items-center">
                     <MapPin size={20} />
-                    <p className="font-bold text-xl ml-2">{cities[index].city}</p>
+                    <p className="font-bold text-xl ml-2">{cityWeatherArr[index].city}</p>
                   </div>
       
                   <div className="text-sm mt-2">

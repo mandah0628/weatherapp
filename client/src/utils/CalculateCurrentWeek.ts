@@ -10,16 +10,15 @@ export default function CalculateCurrentWeek(offsetAdjustedTime: number) : strin
     const localDate = new Date(offsetAdjustedTime * 1000)
 
     // gets the day of the week
-    const currentDayIndex : number = localDate.getUTCDay();
+    const currentDayIndex = localDate.getUTCDay();
 
     // slice from sunday to before current day
-    const beforeCurrent : string[] = weekdays.slice(0,currentDayIndex);
+    const beforeCurrent = weekdays.slice(0,currentDayIndex);
     // slice from current day until the end of the week
-    const currentAndAfter : string[] = weekdays.slice(currentDayIndex);
+    const currentAndAfter = weekdays.slice(currentDayIndex);
 
     // creates an array of the weekdays relative to the current day
-    const currentWeek : string[] = currentAndAfter.concat(beforeCurrent);
+    const currentWeek = currentAndAfter.concat(beforeCurrent);
 
     return currentWeek;
-    
 }

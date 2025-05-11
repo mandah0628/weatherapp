@@ -1,5 +1,12 @@
+/**
+ * Uses the weather code, daytime or nighttime, wind speed to get the file name of the right weather animation.
+ * @param code The weather code.
+ * @param isDay If its daytime.
+ * @param windSpeed Wind speed in m/s.
+ * @returns The file name.
+ */
 export default function GetWeatherAnimation(code:number, isDay : boolean, windSpeed : number) :string{
-    const isWindy :  boolean = windSpeed > 11
+    const isWindy = windSpeed > 11
 
     switch (true) {
         // thunderstorm

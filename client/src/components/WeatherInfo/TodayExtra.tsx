@@ -7,7 +7,7 @@ import Lottie from "@/utils/LottieClient";
 import WeatherAnimations from "@/utils/WeatherAnimations"
 
 
-export default function TodayExtra({data, timezoneOffset} : {data : any, timezoneOffset : number}) {
+export default function TodayExtra({data, timezoneOffset} : {data : any; timezoneOffset : number}) {
     return (
         <div className="w-full h-full flex flex-row items-center justify-evenly text-xl sm:text-2xl font-medium text-center">
 

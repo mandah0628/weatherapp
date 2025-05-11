@@ -5,7 +5,7 @@ import GetWeatherAnimation from "@/utils/GetWeatherAnimation"
 import WeatherAnimations from "@/utils/WeatherAnimations"
 import Lottie from "@/utils/LottieClient";
 
-export default function WeeklyForecast({dailyData, time,timezoneOffset} : {dailyData : any, time : number, timezoneOffset:number}){
+export default function WeeklyForecast({dailyData, time,timezoneOffset} : {dailyData :any, time :number, timezoneOffset :number}){
     const currentWeekdays : string[] = CalculateCurrentWeek(time + timezoneOffset)
 
     return(
