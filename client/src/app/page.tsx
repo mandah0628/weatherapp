@@ -200,7 +200,7 @@ export default function WeatherInfo() {
           <CurrentForecast
             currentData={{ ...weatherData.current, precipitation: weatherData.hourly[0].pop }}
             timezoneOffset={weatherData.timezone_offset}
-            cityName={weatherData.city}
+            cityName={weatherData.name}
           />
         </div>
   

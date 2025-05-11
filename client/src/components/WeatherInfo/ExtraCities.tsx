@@ -1,6 +1,6 @@
 "use client"
 
-import FetchMuiltipleWeather from "@/utils/FetchMultipleWeather";
+import FetchMuiltipleWeather, {canadianCities} from "@/utils/FetchMultipleWeather";
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation";
 import Lottie from "@/utils/LottieClient";
 import { useEffect, useState, Dispatch, SetStateAction } from "react"
@@ -17,6 +17,7 @@ export default function ExtraCities({setWeatherCoords} : {setWeatherCoords : Dis
             try {
                 setLoading(true)
                 const arr = await FetchMuiltipleWeather()
+                
                 console.log(arr)
                 setCityWeatherArr(arr)
     
@@ -28,7 +29,7 @@ export default function ExtraCities({setWeatherCoords} : {setWeatherCoords : Dis
         })();
     }, [])
 
-    
+    console.log(canadianCities)
 
     return (
         <div className="w-full h-full p-4">
@@ -38,13 +39,13 @@ export default function ExtraCities({setWeatherCoords} : {setWeatherCoords : Dis
                 key={index}
                 className="p-3 rounded-xl flex flex-col justify-between cursor-pointer"
                 onClick={() =>
-                  setWeatherCoords({ lat: cityData.data.lat, lon: cityData.data.lon })
+                  setWeatherCoords({ lat: cityData.lat, lon: cityData.lon })
                 }
               >
                 <div>
                   <div className="flex items-center">
                     <MapPin size={20} />
-                    <p className="font-bold text-xl ml-2">{cityWeatherArr[index].city}</p>
+                    <p className="font-bold text-xl ml-2">{canadianCities[index].name}</p>
                   </div>
       
                   <div className="text-sm mt-2">
