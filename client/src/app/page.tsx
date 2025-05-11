@@ -145,9 +145,9 @@ export default function WeatherInfo() {
 
 
   if (loading || !weatherData) {
-    return(
+    return (
       <div 
-        className="w-full min-h-screen"
+        className="w-full min-h-screen flex items-center justify-center"
         style={{
           backgroundImage: `linear-gradient(to top, 
             #fde68a 0%,      
@@ -156,7 +156,7 @@ export default function WeatherInfo() {
             #1e3a8a 100%)`,  
         }}
       >
-        <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+        <div className="min-w-16 w-64 h-64 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
     )
   }
