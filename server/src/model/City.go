@@ -6,17 +6,17 @@ import (
 	"gorm.io/gorm"
 )
 
-type City struct{
-	ID uuid.UUID 				`gorm:"type:uuid;primaryKey"`
-	Name string					`gorm:"not null;size:50"`
-	State string				`gorm:"size:50"`
-	Country string 				`gorm:"not null;size:2"`
-	Lat	float64 				`gorm:"not null"`
-	Lon float64 				`gorm:"not null"`
-	UserID uuid.UUID 			`gorm:"type:uuid;not null"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt
+type City struct {
+	ID        uuid.UUID      `gorm:"type:uuid;primaryKey" json:"id"`
+	Name      string         `gorm:"not null;size:50" json:"name"`
+	State     string         `gorm:"size:50" json:"state"`
+	Country   string         `gorm:"not null;size:2" json:"country"`
+	Lat       float64        `gorm:"not null" json:"lat"`
+	Lon       float64        `gorm:"not null" json:"lon"`
+	UserID    uuid.UUID      `gorm:"type:uuid;not null" json:"userId"`
+	CreatedAt time.Time      `json:"createdAt"`
+	UpdatedAt time.Time      `json:"updatedAt"`
+	DeletedAt gorm.DeletedAt `json:"deletedAt"`
 }
 
 func (city *City) BeforeCreate(tx *gorm.DB) (err error) {
