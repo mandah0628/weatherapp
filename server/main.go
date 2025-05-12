@@ -14,7 +14,7 @@ import (
 func main() {
 	// load .env file for local development
 	if err := godotenv.Load(); err != nil {
-		log.Println("No .env file found. Running in production mode")
+		log.Println("Starting app in DEVELOPMENT mode")
 	}
 
 	// get environment
@@ -32,36 +32,27 @@ func main() {
 	router := gin.Default()
 	
 	// proxies
-	if env == "dev" {
-		router.SetTrustedProxies(nil)
-		log.Println("Starting app in DEVELOPMENT mode, all proxies allowed")
-	} else {
-		prodProxy := os.Getenv("LOAD_BALANCER_IP")
-		if prodProxy == "" {
-			log.Fatalln("Missing load balancer IP from env")
-		}
-		if err := router.SetTrustedProxies([]string{prodProxy}); err != nil {
-			log.Fatalln("Error setting trusted proxies:", err)
-		}
-		log.Println("Starting app in PRODUCTION mode")
-	}
+	router.SetTrustedProxies(nil)
 
-
-	// setup cors
-	corsConfig := cors.Config{
-		AllowOrigins: []string{"http://localhost:3000"},
-		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
-		ExposeHeaders: []string{"Content-Length"},
-		AllowCredentials: true,
-		MaxAge: 12 * time.Hour,
-	}
+	
+	frontendUrl := os.Getenv("FRONTEND_URL")
 	if env == "prod" {
-		frontendUrl := os.Getenv("FRONTEND_PROD_URL")
 		if frontendUrl == "" {
-			log.Fatalln("Missing frontend URL from env")
+			log.Fatalln("Missing FRONTEND_URL in production mode")
 		}
-		corsConfig.AllowOrigins = []string{frontendUrl}
+	} else {
+		if frontendUrl == "" {
+			frontendUrl = "http://localhost:3000"
+		}
+	}
+
+	corsConfig := cors.Config{
+		AllowOrigins:     []string{frontendUrl},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
 	}
 	router.Use(cors.New(corsConfig))
 	
@@ -76,11 +67,16 @@ func main() {
 	routes.CityRoutes(router)
 
 
-	// load port from env
+	// load port 
 	PORT := os.Getenv("PORT")
-	if PORT == "" {
-		log.Fatalln("Missing PORT from env");
+	if PORT == "" && env == "dev" {
+		log.Fatalln("Missing PORT from env in DEVELOPMENT mode");
 	}
+
+	if PORT == "" {
+		PORT = "8080"
+	}
+
 	// start server
 	if err := router.Run(":" + PORT); err != nil {
 		log.Fatalln("Failed to start Gin server:", err)
