@@ -225,3 +225,8 @@ func GetUserByID(c *gin.Context) {
 		"user" : user,
 	})
 }
+
+
+func VeryfiEmail(c *gin.Context) {
+
+}
