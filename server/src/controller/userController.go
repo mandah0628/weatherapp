@@ -1,8 +1,10 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/mandah0628/weatherapp/server/src/database"
 	"github.com/mandah0628/weatherapp/server/src/model"
@@ -228,5 +230,6 @@ func GetUserByID(c *gin.Context) {
 
 
 func VeryfiEmail(c *gin.Context) {
+	log.Println("lul")
 	c.String(200, "ok")
 }
