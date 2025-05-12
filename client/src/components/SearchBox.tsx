@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import FetchSuggestions from "@/utils/FetchSuggestions";
+import GetSuggestions from "@/utils/GetSuggestions";
 import SearchSuggestions from "@/components/SuggestionList";
 
-export default function SearchBox({updateCoords} : {updateCoords : any}) 
+export default function SearchBox({ updateCoords } : { updateCoords : any }) 
 {
   const [query, setQuery] = useState<string>("");
   const [suggestions, setSuggestions] = useState<any[]>([]);
@@ -14,7 +14,7 @@ export default function SearchBox({updateCoords} : {updateCoords : any})
       setQuery(e.target.value);
 
       if(userInput) {
-          const suggestions = await FetchSuggestions(userInput);
+          const suggestions = await GetSuggestions(userInput);
           setSuggestions(suggestions);
       } else {
         setSuggestions([]);
