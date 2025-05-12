@@ -23,7 +23,7 @@ export interface CityDirectResult {
  * @returns  Returns a promise that resolves into an object containing name, state(code), country(code), lat, lon.
  * Returns null if rejected
  */
-export default async function FetchCityDirect(cityData :CityDirectQuery) :Promise<CityDirectResult | null> {
+export default async function GetCityDirect(cityData :CityDirectQuery) :Promise<CityDirectResult | null> {
     try {
         const query = `${cityData.name},${cityData.state ? `${cityData.state},` : ""}${cityData.country}`
         const queryString = `/direct?q=${encodeURIComponent(query)}&limit=1&appid=${API_KEY}`

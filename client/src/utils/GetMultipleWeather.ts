@@ -1,5 +1,5 @@
-import FetchCityDirect from "./FetchCityDirect"
-import FetchWeather from "./FetchWeather"
+import FetchCityDirect from "./GetCityDirect"
+import FetchWeather from "./GetWeather"
 
 
 export const canadianCities : any[] = [
@@ -17,8 +17,8 @@ export const canadianCities : any[] = [
  * @returns A promise that resolves into an array of weather data objects.
  * Throws an error if rejected.
  */
-export default async function FetchMultipleWeather(cities : any[]= canadianCities) : Promise<any[] | null>{
-
+export default async function GetMultipleWeather(cities : any[]= canadianCities) : Promise<any[]>{
+    console.log(cities)
     try {
         // get an array of geo data of each city: name, state code, country code, lat lon
         const geoDataArr :any[] = await Promise.all(cities.map((city :any) => 
@@ -37,6 +37,6 @@ export default async function FetchMultipleWeather(cities : any[]= canadianCitie
         return weatherDataArr
     } catch (error) {
         console.error(error)
-        return null
+        return []
     }
 } 

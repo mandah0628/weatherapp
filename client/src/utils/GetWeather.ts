@@ -12,7 +12,7 @@ export interface Coords {
  * @param cityCoords An object containing the city's coords: lat and lon.
  * @returns A promise that resolves into an object containing the weather data.
  */
-export default async function FetchWeather(cityCoords :Coords) :Promise<any | null>{
+export default async function GetWeather(cityCoords :Coords) :Promise<any | null>{
     try{
         const queryString  =`/onecall?lat=${cityCoords.lat}&lon=${cityCoords.lon}&units=metric&appid=${API_KEY}`;
         const res = await AxiosWeather.get(queryString);

@@ -1,5 +1,5 @@
 import { AxiosGeolocation } from "./Axios";
-import { Coords } from "./FetchWeather";
+import { Coords } from "./GetWeather";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 
@@ -19,7 +19,7 @@ export interface CityDirectResult {
  * @returns Returns a promise that resolves into an object containing name, state(code), country(code), lat, lon.
  * Returns null if rejected.
  */
-export default async function FetchCityReverse(cityCoords: Coords) : Promise<CityDirectResult | null> {
+export default async function GetCityReverse(cityCoords: Coords) : Promise<CityDirectResult | null> {
     try {
         const queryString = `/reverse?lat=${cityCoords.lat}&lon=${cityCoords.lon}&limit=${1}&appid=${API_KEY}`
         const res = await AxiosGeolocation.get(queryString)

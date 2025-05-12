@@ -8,7 +8,7 @@ const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
  * @returns A promise that resolves into an array of city suggestions if matching result(s) are found
  * Empty array if there is no user input or if promise is rejected
  */
-export default async function FetchSuggestions(query : string) :Promise<any[]>{
+export default async function GetSuggestions(query : string) :Promise<any[]>{
   if (!query) {
     return []; 
   }
