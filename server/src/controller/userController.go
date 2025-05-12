@@ -228,5 +228,5 @@ func GetUserByID(c *gin.Context) {
 
 
 func VeryfiEmail(c *gin.Context) {
-
+	c.String(200, "ok")
 }
