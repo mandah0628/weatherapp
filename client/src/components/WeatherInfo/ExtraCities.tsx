@@ -1,12 +1,12 @@
 "use client"
 
-import FetchMuiltipleWeather, {canadianCities} from "@/utils/FetchMultipleWeather";
+import FetchMuiltipleWeather, {canadianCities} from "@/utils/GetMultipleWeather";
 import GetWeatherAnimation from "@/utils/GetWeatherAnimation";
 import Lottie from "@/utils/LottieClient";
 import { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { MapPin } from "lucide-react";
 import WeatherAnimations from "@/utils/WeatherAnimations";
-import { Coords } from "@/utils/FetchWeather";
+import { Coords } from "@/utils/GetWeather";
 
 export default function ExtraCities({setWeatherCoords} : {setWeatherCoords : Dispatch<SetStateAction<Coords | null>>}) {
     const [loading, setLoading] = useState<boolean>(true);
@@ -17,8 +17,6 @@ export default function ExtraCities({setWeatherCoords} : {setWeatherCoords : Dis
             try {
                 setLoading(true)
                 const arr = await FetchMuiltipleWeather()
-                
-                console.log(arr)
                 setCityWeatherArr(arr)
     
             } catch (error) {
@@ -28,8 +26,6 @@ export default function ExtraCities({setWeatherCoords} : {setWeatherCoords : Dis
             }
         })();
     }, [])
-
-    console.log(canadianCities)
 
     return (
         <div className="w-full h-full p-4">
