@@ -3,7 +3,7 @@ name: build and  push
 on:
   push:
     branches:
-      main
+      - main
     paths:
       - 'server/**'
 
@@ -33,5 +33,5 @@ jobs:
         run: |
           IMAGE_TAG=${{ github.sha }}
 
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./server
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
