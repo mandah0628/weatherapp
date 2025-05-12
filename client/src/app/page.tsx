@@ -19,11 +19,12 @@ const GoogleMap = dynamic(
 
 import GetBackground from "@/utils/GetBackground";
 import { AxiosBackend } from "@/utils/Axios";
-import FetchCityReverse from "@/utils/FetchCityReverse";
+import FetchCityReverse from "@/utils/GetCityReverse";
 import GetBrowserLocation from "@/utils/GetBrowserLocation";
-import FetchWeather, {Coords} from "@/utils/FetchWeather";
-
+import FetchWeather, {Coords} from "@/utils/GetWeather";
+import FetchMultipleWeather from "@/utils/GetMultipleWeather";
 import { useAuth } from "@/context/AuthContext";
+import GetMultipleWeather from "@/utils/GetMultipleWeather";
 
 const saskatoonCoords : Coords = {lat: 52.1318, lon: -106.6608}
 
@@ -31,10 +32,12 @@ const saskatoonCoords : Coords = {lat: 52.1318, lon: -106.6608}
 export default function WeatherInfo() {
   
   const [weatherData, setWeatherData] = useState<any>(null);
+  const [userWeatherData, setUserWeatherData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [weatherCoords, setWeatherCoords] = useState<Coords | null>(null);
   const [isSidebarOpen, setIsSideBarOpen] = useState<boolean>(false);
-  const [userCities, setUserCities] = useState<any[] | null>(null)
+  const [userCities, setUserCities] = useState<any[]>([])
+
   const {authState} = useAuth()
   
   const prevCoordsRef = useRef<Coords | null>(null)
@@ -43,15 +46,6 @@ export default function WeatherInfo() {
     setIsSideBarOpen(prev => !prev)
   }
 
-
-  const GetUserCities = async () => {
-    try {
-      const res = await AxiosBackend.get("/city/get-cities")
-      setUserCities(res.data.userCities)
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
 
   // on first mount
@@ -95,7 +89,8 @@ export default function WeatherInfo() {
 
 
 
-  // fetch weather data due to coord change
+  // runs when the coords change and 
+  // gets weather data for the current coords 
   // use previous coords if error occurs
   useEffect(() => {
     if (!weatherCoords) {
@@ -127,34 +122,57 @@ export default function WeatherInfo() {
   }, [weatherCoords]);
 
 
+
+  /**
+   * Gets the user's cities and its weather data
+   * Updates state for userCities and userWeatherData
+   */
+  const GetUserCitiesAndWeather = async () => {
+    try {
+      setLoading(true)
+
+      // gets user cities and updates state
+      const res = await AxiosBackend.get("/city/get-cities")
+      const userCitiesArr = res.data.cities
+      setUserCities(userCitiesArr)
+
+      // fetches weather data for user'c cities
+      const userCityWeatherArr = await GetMultipleWeather(userCitiesArr)
+      setUserWeatherData(userCityWeatherArr)
+  
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+
+  // run only when user auth status changes
+  // and fetches the user's saved cities
   useEffect(() => {
     if (!authState) {
       return
     }
 
     (async () => {
-      try {
-        await GetUserCities()
-      } catch (error) {
-        console.error("Error fetching user's saved cities", error)
-      }
+      await GetUserCitiesAndWeather()
     })();
   
   }, [authState])
   
-
 
   if (loading || !weatherData) {
     return (
       <div 
         className="w-full min-h-screen flex items-center justify-center"
         style={{
-          backgroundImage: `linear-gradient(to top, 
-            #fde68a 0%,      
-            #38bdf8 33%,    
-            #fda4af 66%,     
-            #1e3a8a 100%)`,  
-        }}
+          backgroundImage: `radial-gradient(circle at 20% 30%, 
+            #ffffff 0%, 
+            #ffff99 10%, 
+            #87cefa 60%, 
+            #00aaff 100%)`,  
+          }}
       >
         <div className="min-w-16 w-64 h-64 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
@@ -167,6 +185,8 @@ export default function WeatherInfo() {
   const cardClass = "bg-white/10 border border-white/20 rounded-2xl p-4 backdrop-blur-sm";
   const isDay= (weatherData.current.dt > weatherData.current.sunrise && weatherData.current.dt < weatherData.current.sunset)
 
+
+
   return (
     <div className={`min-h-screen pt-16 pb-5 ${backgroundClass}`}>
 
@@ -177,16 +197,20 @@ export default function WeatherInfo() {
           setWeatherCoords={setWeatherCoords} 
           userCities={userCities} 
           setUserCities={setUserCities}
-          weatherData={weatherData}
+          setUserWeatherData={setUserWeatherData}
+          currentCity={{name: weatherData.name, state: weatherData.state, country: weatherData.country, lat: weatherData.lat, lon: weatherData.lon }}
         />
       </div>
   
       {/* Sidebar */}
-      <div className="">
+      <div>
         <SideBar
           userCities={userCities}
           isSideBarOpen={isSidebarOpen}
           toggleSidebar={toggleSidebar}
+          background={backgroundClass}
+          setWeatherCoords={setWeatherCoords}
+          userWeatherData={userWeatherData}
         />
       </div>
       

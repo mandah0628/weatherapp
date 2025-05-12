@@ -1,89 +1,102 @@
-// Header.tsx
-"use client"
+"use client";
 
 import { CircleMinus, CirclePlus, Menu } from "lucide-react";
 import SearchBox from "./SearchBox";
 import { useAuth } from "@/context/AuthContext";
-import { Dispatch, SetStateAction } from "react";
-import { Coords } from "@/utils/FetchWeather";
+import { Dispatch, SetStateAction, useState } from "react";
+import GetWeather, { Coords } from "@/utils/GetWeather";
 import { AxiosBackend } from "@/utils/Axios";
+import { toast } from "react-toastify";
 
-interface RequestBody {
-  name: string; 
-  state: string; 
-  country:string; 
-  lat: number; 
+export interface RequestBody {
+  name: string;
+  state: string;
+  country: string;
+  lat: number;
   lon: number;
 }
 
-export default function Header({ toggleSidebar, setWeatherCoords, setUserCities, userCities, weatherData} : 
-  {toggleSidebar: () => void; setWeatherCoords: Dispatch<SetStateAction<Coords | null>>; setUserCities: Dispatch<SetStateAction<any[] | null>>; userCities :any[] |null; weatherData :any}) {
-    const {authState} = useAuth()
+export default function Header({ toggleSidebar, setWeatherCoords, setUserCities, setUserWeatherData, userCities, currentCity } : {
+  toggleSidebar: () => void; setWeatherCoords: Dispatch<SetStateAction<Coords | null>>; setUserCities: Dispatch<SetStateAction<any[]>>; setUserWeatherData: Dispatch<SetStateAction<any[]>>; userCities: any[]; currentCity: RequestBody }) {
 
+  const { authState } = useAuth();
 
-    const RemoveCity = async () => {
-      if (!userCities) {
-        return
+  // adds the current city from the user's saved cities
+  const AddCity = async () => {
+    try {
+      const res = await AxiosBackend.post(`/city/add-city`, currentCity);
+      if (res.status === 200) {
+        setUserCities(prev => [...prev, currentCity])
+        const newCityWeather = await GetWeather({lat :currentCity.lat, lon: currentCity.lon})
+        setUserWeatherData(prev => [...prev,  newCityWeather])
+        toast.success(`${currentCity.name} added to saved cities.`);
       }
+      
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to add city.");
+    }
+  };
 
-      const cityToRemove :any = userCities?.find((city :any) => city.name === weatherData.name)
-      if (!cityToRemove) {
-        return
-      }
 
-      const cityId :string = cityToRemove.id
-
-      try {
-        const res = await AxiosBackend.delete(`/remove-city/${cityId}`)
-        if(res.status === 200){
-          setUserCities(userCities.filter((city :any) => city.name !== weatherData.name))
-        }
-      } catch (error) {
-        console.error(error)
-      }
+  // removes the current city from the user's saved cities
+  const RemoveCity = async () => {
+    if (!userCities) {
+      return;
     }
 
-    const AddCity = async () => {
-      try {
-        const {name, state, country, lat, lon} = weatherData
-        const cityData : RequestBody = {name, state, country, lat, lon}
-        const res = await AxiosBackend.post(`/city/add-city`, cityData)
-
-        if(res.status === 200) {
-          setUserCities((prev) => (prev ? [...prev, res.data] : res.data))
-        }
-      } catch (error) {
-        console.error(error)
-      }
+    // finds the city object where names match
+    const cityToRemove = userCities.find((city: any) => city.name === currentCity.name)
+    if (!cityToRemove) {
+      return
     }
 
-    const isCitySaved = userCities?.some((city :any) => city.name === weatherData.name)
+    // get the city id
+    const cityId :string = cityToRemove.id;
 
-    return (
-      <header className="flex items-center gap-3 p-2">
-        
-        <Menu
-          className="cursor-pointer flex-shrink-0"
-          size={28}
-          onClick={toggleSidebar}
-        />
+    try {
+      const res = await AxiosBackend.delete(`/city/remove-city/${cityId}`);
+      if (res.status === 200) {
+        setUserCities(prev => prev.filter((userCity) => userCity.name !== currentCity.name))
+        toast.success(`${currentCity.name} removed from saved cities!`);
+        setUserWeatherData(prev => prev.filter((cityWeather) => cityWeather.lat !== currentCity.lat))
+      }
 
-        
-        <div className="flex-1 min-w-0 max-w-85">
-          <SearchBox updateCoords={setWeatherCoords} />
-        </div>
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to remove city.");
+    }
+  };
 
-        <div>
-          {authState && (isCitySaved ? (
-            <div>
-              <CircleMinus onClick={() => RemoveCity()} className="cursor-pointer"/>
+
+  const isCitySaved = userCities?.some((city: any) => city.name === currentCity.name);
+
+  return (
+    <header className="flex items-center gap-3 p-2">
+      <Menu className="cursor-pointer flex-shrink-0" size={28} onClick={toggleSidebar} />
+
+      <div className="flex-1 min-w-0 max-w-85">
+        <SearchBox updateCoords={setWeatherCoords}/>
+      </div>
+
+      <div className="relative">
+        {authState &&
+          (isCitySaved ? (
+            <div className="relative">
+              <CircleMinus
+                onClick={RemoveCity}
+                className="cursor-pointer relative z-10 text-red-500"
+              />
             </div>
           ) : (
-            <div>
-              <CirclePlus onClick={() => AddCity()} className="cursor-pointer"/>
+            <div className="relative">
+              <CirclePlus
+                onClick={AddCity}
+                className="cursor-pointer relative z-10 text-green-500"
+              />
             </div>
           ))}
-        </div>
-      </header>
-    );
+      </div>
+    </header>
+  );
 }
