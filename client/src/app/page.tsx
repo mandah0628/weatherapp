@@ -134,7 +134,6 @@ export default function WeatherInfo() {
       // gets user cities and updates state
       const res = await AxiosBackend.get("/city/get-cities")
       const userCitiesArr = res.data.userCities
-      console.log(userCitiesArr)
       setUserCities(userCitiesArr)
 
       // fetches weather data for user'c cities
