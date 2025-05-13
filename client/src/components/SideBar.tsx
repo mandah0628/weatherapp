@@ -20,6 +20,7 @@ export default function SideBar({ isSideBarOpen, userCities, background, toggleS
   const {authState} = useAuth()
 
 
+
   return (
     <AnimatePresence>
       {isSideBarOpen && (
@@ -69,6 +70,7 @@ export default function SideBar({ isSideBarOpen, userCities, background, toggleS
                   const weather = city.current;
                   const daily = city.daily[0];
                   const cityName = userCities[index].name
+                  console.log(cityName)
 
                   return (
                     // individual weather card
