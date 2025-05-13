@@ -133,7 +133,7 @@ export default function WeatherInfo() {
 
       // gets user cities and updates state
       const res = await AxiosBackend.get("/city/get-cities")
-      const userCitiesArr = res.data.cities
+      const userCitiesArr = res.data.userCities
       setUserCities(userCitiesArr)
 
       // fetches weather data for user'c cities
@@ -184,7 +184,6 @@ export default function WeatherInfo() {
   const gridClass = `col-span-12 border rounded-2xl overflow-hidden min-w-[250px]`
   const cardClass = "bg-white/10 border border-white/20 rounded-2xl p-4 backdrop-blur-sm";
   const isDay= (weatherData.current.dt > weatherData.current.sunrise && weatherData.current.dt < weatherData.current.sunset)
-
 
 
   return (
