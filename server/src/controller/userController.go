@@ -1,14 +1,17 @@
 package controller
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mandah0628/weatherapp/server/src/config"
 	"github.com/mandah0628/weatherapp/server/src/database"
 	"github.com/mandah0628/weatherapp/server/src/model"
 	"github.com/mandah0628/weatherapp/server/src/utils"
+	"gopkg.in/mail.v2"
 )
 
 var isProd = os.Getenv("ENV") == "prod"
@@ -53,7 +56,7 @@ func RegisterUser(c *gin.Context) {
 		return
 	}
 
-	// generate token
+	// generate JWT
 	userId := user.ID.String()
 	token, err := utils.GenerateToken(userId)
 	if err != nil {
@@ -64,7 +67,6 @@ func RegisterUser(c *gin.Context) {
 	}
 
 	// set token in cookie
-	
 	cookie := http.Cookie{
 		Name:     "token",
 		Value:    token,
@@ -75,13 +77,51 @@ func RegisterUser(c *gin.Context) {
 		MaxAge:   3600,
 	}
 	http.SetCookie(c.Writer, &cookie)
-	// response
+
+
+	// generate verification token
+	verificationToken, err := utils.GenerateVerificationToken()
+	if err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
+
+	//build email
+	frontendUrl := os.Getenv("FRONTEND_URL")
+	link := fmt.Sprintf("%s/verify?token=%s", frontendUrl,verificationToken)
+
+	mail := mail.NewMessage()
+	mail.SetHeader("From", "weatherapp@mail.com")
+	mail.SetHeader("To", user.Email)
+	mail.SetHeader("Subject", "Verify your email")
+	mail.SetBody("text/plain",  fmt.Sprintf("Hi %s,\n\nPlease verify your email by clicking the link below:\n\n%s", user.Name, link))
+
+	//send verification email
+	if err := config.MailDialer.DialAndSend(mail); err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
+
+	// update VerificationTokeb
+	if err := database.UpdateUser(user.ID, map[string]interface{}{"VerificationToken" : verificationToken}); err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+	}
 	c.String(200, "ok")
 }
 
 
 func VerifyToken(c*gin.Context) {
 	c.String(200, "Ok")
+}
+
+func VerifyEmail(c*gin.Context) {
+	c.String(200, "ok")
 }
 
 func LoginUser(c *gin.Context) {

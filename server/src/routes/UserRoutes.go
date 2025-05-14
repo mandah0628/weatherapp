@@ -17,5 +17,6 @@ func UserRoutes(router *gin.Engine) {
 		userGroup.PUT("/update-user", controller.UpdateUser)
 		userGroup.GET("/get-user", controller.GetUserByID)
 		userGroup.POST("/verify-token", controller.VerifyToken)
+		userGroup.POST("/verify-email", controller.VerifyEmail)
 	}
 }
