@@ -1,6 +1,6 @@
 "use client";
 
-import { CircleMinus, CirclePlus, Menu } from "lucide-react";
+import { CircleMinus, CirclePlus, Menu, Star } from "lucide-react";
 import SearchBox from "./SearchBox";
 import { useAuth } from "@/context/AuthContext";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -21,7 +21,30 @@ export default function Header({ toggleSidebar, setWeatherCoords, setUserCities,
 
   const { authState } = useAuth();
 
-  // adds the current city from the user's saved cities
+  const [isDefaultCity, setIsDefaultCity] = useState<boolean>(() => {
+    const defaultCoords = localStorage.getItem("defaultCoords")
+    if(!defaultCoords) {
+      return false
+    }
+
+    try {
+      const parsedCoords :Coords | null = defaultCoords ? JSON.parse(defaultCoords) : null
+      const isDefaultCity :boolean = currentCity.lat === parsedCoords?.lat && currentCity.lon === parsedCoords.lon 
+      return isDefaultCity
+    } catch (error) {
+      return false
+  }})
+
+
+  // makes the current city the default city
+  const MakeCityDefault = () => {
+    const newDefaultCity :Coords = {lat: currentCity.lat, lon: currentCity.lon}
+    localStorage.setItem("defaultCoords",JSON.stringify(newDefaultCity))
+    setIsDefaultCity(true)
+    toast.success(`${currentCity.name} is set as default city!`)
+  }
+
+  // adds the current city to the user's saved cities
   const AddCity = async () => {
     try {
       const res = await AxiosBackend.post(`/city/add-city`, currentCity);
@@ -68,7 +91,6 @@ export default function Header({ toggleSidebar, setWeatherCoords, setUserCities,
     }
   };
 
-
   const isCitySaved = userCities?.some((city: any) => city.name === currentCity.name);
 
   return (
@@ -96,6 +118,17 @@ export default function Header({ toggleSidebar, setWeatherCoords, setUserCities,
               />
             </div>
           ))}
+      </div>
+
+      <div>
+          {isDefaultCity ? (
+            <Star fill="yellow" stroke="yellow"/>
+            ) : (
+              <div className="toll">
+                <Star className="tooltip" onClick={() => MakeCityDefault()}/>
+              </div>
+            )
+          }
       </div>
     </header>
   );
