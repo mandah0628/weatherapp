@@ -122,10 +122,13 @@ export default function Header({ toggleSidebar, setWeatherCoords, setUserCities,
 
       <div>
           {isDefaultCity ? (
-            <Star fill="yellow" stroke="yellow"/>
+            <div title="This is your default city" className="cursor-pointer">
+              <Star fill="yellow" stroke="yellow"/>
+            </div>
+            
             ) : (
-              <div className="toll">
-                <Star className="tooltip" onClick={() => MakeCityDefault()}/>
+              <div title="Click to make this city your default" className="cursor-pointer">
+                <Star onClick={() => MakeCityDefault()}/>
               </div>
             )
           }
