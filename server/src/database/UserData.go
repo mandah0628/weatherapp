@@ -41,3 +41,15 @@ func FindUserByID(userUuid uuid.UUID) (*model.User, error) {
 
 	return &user, nil
 }
+
+
+func FindUserByVerificationToken(token string) (*model.User, error) {
+	var user model.User
+	err := config.Postgres.Model(&user).Where("verification_token = ?", token).First(&user).Error
+	
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
