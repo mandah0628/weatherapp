@@ -157,7 +157,9 @@ func VerifyEmail(c*gin.Context) {
 		return
 	}
 
-	c.String(200, "ok")
+	c.JSON(200, gin.H{
+		"isVerified" : user.Verified,
+	})
 }
 
 func LoginUser(c *gin.Context) {
@@ -214,7 +216,9 @@ func LoginUser(c *gin.Context) {
 	}
 	http.SetCookie(c.Writer, &cookie)
 	// response
-	c.String(200, "ok")
+	c.JSON(200, gin.H{
+		"isVerified" : user.Verified,
+	})
 }
 
 
