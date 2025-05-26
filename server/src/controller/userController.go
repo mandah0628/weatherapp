@@ -57,8 +57,7 @@ func RegisterUser(c *gin.Context) {
 	}
 
 	// generate JWT
-	userId := user.ID.String()
-	token, err := utils.GenerateToken(userId)
+	token, err := utils.GenerateToken(&user)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"error" : "Error generating token",
@@ -194,7 +193,7 @@ func LoginUser(c *gin.Context) {
 	}
 	
 	// generate token
-	token, err := utils.GenerateToken(user.ID.String())
+	token, err := utils.GenerateToken(user)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"error" : "Internal server error",
