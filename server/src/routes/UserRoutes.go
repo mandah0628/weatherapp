@@ -12,11 +12,11 @@ func UserRoutes(router *gin.Engine) {
 		userGroup.POST("/register", controller.RegisterUser)
 		userGroup.POST("/login", controller.LoginUser)
 		userGroup.POST("/logout", controller.LogoutUser)
+		userGroup.POST("/verify-email", controller.VerifyEmail)
 
 		userGroup.Use(middleware.ValidateToken())
 		userGroup.PUT("/update-user", controller.UpdateUser)
 		userGroup.GET("/get-user", controller.GetUserByID)
 		userGroup.POST("/verify-token", controller.VerifyToken)
-		userGroup.POST("/verify-email", controller.VerifyEmail)
 	}
 }
