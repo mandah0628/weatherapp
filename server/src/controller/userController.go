@@ -121,6 +121,43 @@ func VerifyToken(c*gin.Context) {
 }
 
 func VerifyEmail(c*gin.Context) {
+	// get token from body
+	var req struct {
+		Token string `json:"token"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{
+			"error" : "Invalid request",
+		})
+		return
+	}
+
+
+	user, err := database.FindUserByVerificationToken(req.Token)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error" : "Invalid or expired token",
+		})
+		return
+	}
+
+	if user.Verified {
+		c.JSON(200, gin.H{
+			"message" : "Email is already verified",
+		})
+		return
+	}
+
+	user.Verified = true
+	user.VerificationToken = ""
+
+	if err := config.Postgres.Save(user).Error; err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
+
 	c.String(200, "ok")
 }
 
