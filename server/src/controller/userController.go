@@ -115,9 +115,12 @@ func RegisterUser(c *gin.Context) {
 }
 
 
+
 func VerifyToken(c*gin.Context) {
 	c.String(200, "Ok")
 }
+
+
 
 func VerifyEmail(c*gin.Context) {
 	// get token from body
