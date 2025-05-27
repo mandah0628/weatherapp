@@ -1,14 +1,17 @@
 package controller
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mandah0628/weatherapp/server/src/config"
 	"github.com/mandah0628/weatherapp/server/src/database"
 	"github.com/mandah0628/weatherapp/server/src/model"
 	"github.com/mandah0628/weatherapp/server/src/utils"
+	"gopkg.in/mail.v2"
 )
 
 var isProd = os.Getenv("ENV") == "prod"
@@ -53,9 +56,8 @@ func RegisterUser(c *gin.Context) {
 		return
 	}
 
-	// generate token
-	userId := user.ID.String()
-	token, err := utils.GenerateToken(userId)
+	// generate JWT
+	token, err := utils.GenerateToken(&user)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"error" : "Error generating token",
@@ -64,7 +66,6 @@ func RegisterUser(c *gin.Context) {
 	}
 
 	// set token in cookie
-	
 	cookie := http.Cookie{
 		Name:     "token",
 		Value:    token,
@@ -75,13 +76,93 @@ func RegisterUser(c *gin.Context) {
 		MaxAge:   3600,
 	}
 	http.SetCookie(c.Writer, &cookie)
-	// response
+
+
+	// generate verification token
+	verificationToken, err := utils.GenerateVerificationToken()
+	if err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
+
+	//build email
+	frontendUrl := os.Getenv("FRONTEND_URL")
+	link := fmt.Sprintf("%s/verify?token=%s", frontendUrl,verificationToken)
+
+	mail := mail.NewMessage()
+	mail.SetHeader("From", "weatherapp@mail.com")
+	mail.SetHeader("To", user.Email)
+	mail.SetHeader("Subject", "Verify your email")
+	mail.SetBody("text/plain",  fmt.Sprintf("Hi %s,\n\nPlease verify your email by clicking the link below:\n\n%s", user.Name, link))
+
+	//send verification email
+	if err := config.MailDialer.DialAndSend(mail); err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
+
+	// update VerificationTokeb
+	if err := database.UpdateUser(user.ID, map[string]interface{}{"VerificationToken" : verificationToken}); err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+	}
 	c.String(200, "ok")
 }
 
 
+
 func VerifyToken(c*gin.Context) {
 	c.String(200, "Ok")
+}
+
+
+
+func VerifyEmail(c*gin.Context) {
+	// get token from body
+	var req struct {
+		Token string `json:"token"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{
+			"error" : "Invalid request",
+		})
+		return
+	}
+
+
+	user, err := database.FindUserByVerificationToken(req.Token)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error" : "Invalid or expired token",
+		})
+		return
+	}
+
+	if user.Verified {
+		c.JSON(200, gin.H{
+			"message" : "Email is already verified",
+		})
+		return
+	}
+
+	user.Verified = true
+	user.VerificationToken = ""
+
+	if err := config.Postgres.Save(user).Error; err != nil {
+		c.JSON(500, gin.H{
+			"error" : "Internal server error",
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"isVerified" : user.Verified,
+	})
 }
 
 func LoginUser(c *gin.Context) {
@@ -117,7 +198,7 @@ func LoginUser(c *gin.Context) {
 	}
 	
 	// generate token
-	token, err := utils.GenerateToken(user.ID.String())
+	token, err := utils.GenerateToken(user)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"error" : "Internal server error",
@@ -138,7 +219,9 @@ func LoginUser(c *gin.Context) {
 	}
 	http.SetCookie(c.Writer, &cookie)
 	// response
-	c.String(200, "ok")
+	c.JSON(200, gin.H{
+		"isVerified" : user.Verified,
+	})
 }
 
 

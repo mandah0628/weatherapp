@@ -61,6 +61,9 @@ func main() {
 	config.Connect()
 	log.Println("Database connection is successful!")
 
+	config.InitMailer()
+	log.Println("Connection to mail dialer successful!")
+
 
 	// import routes
 	routes.UserRoutes(router)

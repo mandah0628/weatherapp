@@ -2,6 +2,7 @@
 
 import { AxiosBackend } from "@/utils/Axios";
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { toast } from "react-toastify";
 
 
 type AuthContextType = {
@@ -48,6 +49,13 @@ export function AuthProvider({children}: {children : ReactNode}) {
             
             if(res.status === 200){
                 setAuthState(true)
+                console.log(res.data.isVerified)
+                const isVerified :boolean = res.data?.isVerified
+                if (!isVerified) {
+                    toast.warn("⚠️Please verify your email", {
+                        autoClose: 5000,
+                    })
+                }
             }
 
         } catch (error) {
@@ -81,6 +89,14 @@ export function AuthProvider({children}: {children : ReactNode}) {
             })
             if(res.status === 200) {
                 setAuthState(true)
+                console.log(res.data.isVerified)
+
+                const isVerified :boolean = res.data?.isVerified
+                if (!isVerified) {
+                    toast.warn("⚠️Please verify your email", {
+                        autoClose: 5000,
+                    })
+                }
             }
         } catch (error) {
             console.error(error)
