@@ -6,11 +6,18 @@ import { useState, useEffect } from "react"
 
 export default function VerifyPage() {
   const router = useRouter()
-  const searchParamas = useSearchParams()
-  const token = searchParamas.get("token")
-  const [verifyLoading, setVerifyLoading] = useState<boolean>(true)
-  const [verified, setVerified] = useState<boolean>(false)
+  const searchParams = useSearchParams()
+
+  const [token, setToken] = useState<string | null>(null)
+  const [verifyLoading, setVerifyLoading] = useState(true)
+  const [verified, setVerified] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  
+  useEffect(() => {
+    const t = searchParams.get("token")
+    if (t) setToken(t)
+  }, [searchParams])
 
   useEffect(() => {
     if (!token) return;
@@ -21,19 +28,12 @@ export default function VerifyPage() {
         const res = await AxiosBackend.post("/user/verify-email", { token })
         if (res.status === 200) {
           setVerified(true)
-
-          setTimeout(() => {
-            router.push("/")
-        }, 3000)
+          setTimeout(() => router.push("/"), 3000)
         }
       } catch (error: any) {
         console.error(error)
         setVerified(false)
-        if (error.response?.data?.error) {
-          setErrorMessage(error.response.data.error)
-        } else {
-          setErrorMessage("An unexpected error occurred.")
-        }
+        setErrorMessage(error.response?.data?.error || "An unexpected error occurred.")
       } finally {
         setVerifyLoading(false)
       }
@@ -58,15 +58,17 @@ export default function VerifyPage() {
       ) : (
         <div className="bg-white shadow-xl rounded-2xl p-6 text-center max-w-md w-full">
           {verified ? (
-            <div>
+            <>
               <h1 className="text-2xl font-bold text-green-600 mb-2">Email Verified!</h1>
-              <p className="text-gray-700">Your email address has been successfully verified! You will be redirected to the home page now.</p>
-            </div>
+              <p className="text-gray-700">
+                Your email address has been successfully verified! Redirecting to home...
+              </p>
+            </>
           ) : (
-            <div>
+            <>
               <h1 className="text-2xl font-bold text-red-600 mb-2">Verification Failed</h1>
               <p className="text-gray-700">{errorMessage || "Invalid or expired token."}</p>
-            </div>
+            </>
           )}
         </div>
       )}
